@@ -1,0 +1,23 @@
+$brown-color: #2D2D34;
+$white: #F8F4E3;
+$grey: #A2A392;
+
+.primary-brown {
+    background-color: $brown-color;
+    color: $white;
+    width: 12rem;
+    height: 4rem;
+    font-size: 2rem;
+    border: none;
+    box-shadow: $grey 5px 5px;
+    cursor: pointer;
+    
+    &:active {
+        translate: 5px 5px;
+        box-shadow: none;
+    }
+}
+
+.m-8 {
+    margin: 8px;
+}
