@@ -1,5 +1,8 @@
 const buttonClassMappings = {
-    pb: 'primary-brown'
+    pb: 'primary-brown',
+    py: 'primary-yellow',
+    inpGray: 'input-gray'
+
 }
 
 export const getClassFromType = (type) => {

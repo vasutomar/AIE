@@ -1,16 +1,13 @@
-$brown-color: #2D2D34;
-$white: #F8F4E3;
-$grey: #A2A392;
+@import '../../assets/styles/base.scss';
 
 .primary-brown {
     background-color: $brown-color;
     color: $white;
-    width: 12rem;
-    height: 4rem;
     font-size: 2rem;
     border: none;
     box-shadow: $grey 5px 5px;
     cursor: pointer;
+    font-family: Kulim Park;
     
     &:active {
         translate: 5px 5px;
@@ -18,6 +15,13 @@ $grey: #A2A392;
     }
 }
 
-.m-8 {
-    margin: 8px;
+.primary-yellow {
+    background-color: $yellow;
+    color: $brown-color;
+    width: 10.25rem;
+    height: 3.125rem;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-family: Kulim Park;
 }

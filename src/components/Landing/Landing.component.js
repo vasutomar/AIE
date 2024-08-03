@@ -12,7 +12,7 @@ function Landing() {
     }, []);
 
     return(
-        <img src={logo}/>
+        <img src={logo} alt="aie-logo"/>
     );
 }
 
