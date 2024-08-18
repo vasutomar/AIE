@@ -10,7 +10,9 @@ function Details({ authenticationDetails, setPage }) {
   return (
     <div className="details">
       <div className="logo-column">
-        <span class="material-icons" onClick={() => setPage('auth')}>arrow_back</span>
+        <span class="material-icons" onClick={() => setPage("auth")}>
+          arrow_back
+        </span>
         <img src={logo} />
       </div>
       <div className="info-column">
@@ -27,7 +29,13 @@ function Details({ authenticationDetails, setPage }) {
             );
           })}
         </div>
-        <Button text={buttonText} buttonType="py" />
+        <Button
+          text={buttonText}
+          buttonType="py"
+          onClick={() => {
+            window.location.href = "/aie/questions";
+          }}
+        />
       </div>
     </div>
   );
