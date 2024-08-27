@@ -16,8 +16,10 @@ function Details({ authenticationDetails, setPage }) {
         <img src={logo} />
       </div>
       <div className="info-column">
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <div className="headings">
+          <h1>{title}</h1>
+          <p>{subtitle}</p>
+        </div>
         <div className="input-group">
           {fields.map((field) => {
             return (

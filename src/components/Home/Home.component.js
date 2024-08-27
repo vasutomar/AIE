@@ -7,6 +7,7 @@ import study from '../../assets/images/study.png';
 import test from '../../assets/images/test.png';
 
 import "./Home.scss";
+import StudyGroups from "../StudyGroups/StudyGroups.component";
 function Home() {
   const [currentPage, setCurrentPage] = useState("Discussion zone");
   const features = [
@@ -32,9 +33,9 @@ function Home() {
         case 'Discussion zone': {
             return <Discussions />;
         }
-        // case 'Study groups': {
-        //     return <Study/>;
-        // }
+        case 'Study groups': {
+            return <StudyGroups/>;
+        }
         // case 'Practice': {
         //     return <Practice/>;
         // }

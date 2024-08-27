@@ -9,15 +9,13 @@ $yellow: #ffd946;
   width: 12rem;
 }
 
-// Heights
-.h-4 {
-  height: 4rem;
-}
 
 // Margins
 .m-8 {
   margin: 8px;
 }
+
+//------------Background colors------------//
 
 .color-bg-A3CEF1 {
   background-color: rgba(#A3CEF1, 0.7);
@@ -43,10 +41,44 @@ $yellow: #ffd946;
   background-color: #D8FCCF;
 }
 
+.color-bg-E2DCDE {
+  background-color: #E2DCDE;
+}
+
+//------------Font colors------------//
+
 .color-font-white {
   color: white;
 }
 
 .color-font-black {
   color: black;
+}
+
+//------------Font alignment------------//
+
+.font-center {
+  text-align: center;
+}
+
+//------------Padding------------//
+
+.padding-1-1-2-1 {
+  padding: 1rem 1rem 2rem 1rem;
+}
+
+//------------Heights------------//
+
+.h-4 {
+  height: 4rem;
+}
+
+.min-height-200 {
+  min-height: 200px !important;
+}
+
+//------------Cursors------------//
+
+.cursor-pointer {
+  cursor: pointer;
 }

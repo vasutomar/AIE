@@ -1,0 +1,33 @@
+.studygroup-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+
+    select {
+        height: 3.75rem;
+        background-color: #2D2D34;
+        color: white;
+        border: none;
+        font-size: 1.5rem;
+        padding: 1rem;
+        font-size: 24px;
+
+        option {
+            background-color:rgb(45,45,52);opacity:0.5;
+        }
+    }
+
+    .card-bracket {
+        display: flex;
+        margin-top: 5rem;
+        .card-image-block {
+            max-width: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 4rem;
+        }
+    }
+}
