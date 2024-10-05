@@ -25,7 +25,7 @@ function Authentication() {
         <div className="authentication">
           <img src={logo} alt="aie-logo" />
           <Button
-            onClick={() => renderDetailsSection("login")}
+            onClick={() => renderDetailsSection("signin")}
             extraClass="m-8 w-12 h-4"
             buttonType={"pb"}
             text={"Login"}
@@ -43,7 +43,7 @@ function Authentication() {
           </div>
         </div>
       ) : (
-        <Details setPage={setPage} authenticationDetails={authDetails[page]}/>
+        <Details setPage={setPage} authenticationDetails={authDetails[page]} page={page}/>
       )}
     </>
   );
