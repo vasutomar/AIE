@@ -1,40 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Questions.scss";
+import { get } from "../../utils/request.util";
 function Questions() {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const data = [
-    {
-      title: "Which examination are you preparing for?",
-      type: "dropdown",
-      options: [
-        "UPSC Civil Services Examination (CSE)",
-        "IBPS PO (Probationary Officer)",
-        "IBPS SO (Specialist Officer)",
-        "IBPS Clerk",
-        "IBPS RRB (Regional Rural Banks)",
-        "SBI PO",
-        "RRB NTPC (Non-Technical Popular Categories)",
-        "Indian Coast Guard",
-        "SSC CGL (Combined Graduate Level) Exam",
-        "ISRO/Central Government Scientific & Technical Organizations Exams",
-        "SEBI Grade A",
-        "NABARD",
-        "UPSC CMS",
-        "Judiciary",
-        "CAT",
-        "XAT",
-        "SNAP",
-        "CMAT",
-        "CSIR NET",
-        "UGC NET",
-      ],
-    },
-  ];
+  const [questionData, setQuestionData] = useState([]);
+
+  useEffect(() => {
+    get(`https://allindiaexam.azurewebsites.net/onboarding/questions`, {
+      Authorization: localStorage.getItem('token')
+    }, (response) => {
+      console.log('success questions', response);
+      setQuestionData(response.data.data);
+    }, (error) => {
+      console.log('error questions', error);
+    });
+  }, []);
 
   const getComponent = () => {
-    const type = data[questionIndex].type;
+    if (!questionData.length) return;
+    const type = questionData[questionIndex].type;
     if (type === "dropdown") {
-      const options = data[questionIndex].options;
+      const options = questionData[questionIndex].options;
       return (
         <select>
           {options.map((option) => {
@@ -45,17 +31,20 @@ function Questions() {
     }
   };
 
-  const gotoHome = () => {
-    window.location.href = "/aie/home"
+  const fetchNextQuestion = () => {
+    if (questionIndex === questionData.length)
+      window.location.href = "/aie/home";
+    else 
+      setQuestionIndex(questionIndex+1);
   }
 
   return (
     <div className="question-layout">
-      <p>Which examamination are you preparing for?</p>
+      <p>{questionData && questionData[questionIndex]?.title}</p>
       <div className="question-container">
         <span class="material-symbols-outlined">arrow_back_ios</span>
         {getComponent()}
-        <span class="material-symbols-outlined" onClick={gotoHome}>arrow_forward_ios</span>
+        <span class="material-symbols-outlined" onClick={fetchNextQuestion}>arrow_forward_ios</span>
       </div>
     </div>
   );

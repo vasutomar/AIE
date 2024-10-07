@@ -16,6 +16,8 @@ function Details({ authenticationDetails, setPage, page }) {
     });
     post(`https://allindiaexam.azurewebsites.net/authentication/`+page, payload, null, (response) => {
       console.log('success', response);
+      localStorage.setItem('token', response.data.data);
+      window.location.href = "/aie/questions";
     }, (error) => {
       console.log('error', error);
     });
@@ -27,7 +29,7 @@ function Details({ authenticationDetails, setPage, page }) {
         <span class="material-icons" onClick={() => setPage("auth")}>
           arrow_back
         </span>
-        <img src={logo} />
+        <img src={logo} alt="website-logo" />
       </div>
       <div className="info-column">
         <div className="headings">
