@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Questions.scss";
-import { get } from "../../utils/request.util";
+import { get, getAppUrl } from "../../utils/request.util";
 function Questions() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [questionData, setQuestionData] = useState([]);
 
   useEffect(() => {
-    get(`https://allindiaexam.azurewebsites.net/onboarding/questions`, {
+    get(`${getAppUrl()}/onboarding/questions`, {
       Authorization: localStorage.getItem('token')
     }, (response) => {
       console.log('success questions', response);
@@ -32,8 +32,10 @@ function Questions() {
   };
 
   const fetchNextQuestion = () => {
-    if (questionIndex === questionData.length)
+    if (questionIndex === questionData.length-1) {
+      localStorage.setItem('isOnboardingComplete', true);
       window.location.href = "/aie/home";
+    }
     else 
       setQuestionIndex(questionIndex+1);
   }

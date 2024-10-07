@@ -3,7 +3,7 @@ import "./Details.scss";
 import logo from "../../assets/images/logo.png";
 import Button from "../../atoms/Button/Button";
 import Input from "../../atoms/Input/Input";
-import { post } from "../../utils/request.util";
+import { getAppUrl, post } from "../../utils/request.util";
 
 function Details({ authenticationDetails, setPage, page }) {
   const { title, subtitle, buttonText, fields } = authenticationDetails;
@@ -14,12 +14,15 @@ function Details({ authenticationDetails, setPage, page }) {
     [...fields].forEach((field, index) => {
       payload[field.key] = inputs[index].value; 
     });
-    post(`https://allindiaexam.azurewebsites.net/authentication/`+page, payload, null, (response) => {
-      console.log('success', response);
-      localStorage.setItem('token', response.data.data);
-      window.location.href = "/aie/questions";
+    post(`${getAppUrl()}/authentication/`+page, payload, null, (response) => {
+      if (![200, 201].includes(response.data.statusCode)) {
+        alert(`Server Error : ${response.data.error}`);
+      } else {
+        localStorage.setItem('token', response.data.data);
+        window.location.href = "/aie/questions";
+      }
     }, (error) => {
-      console.log('error', error);
+      alert(`API Error : ${error}`);
     });
   }
 

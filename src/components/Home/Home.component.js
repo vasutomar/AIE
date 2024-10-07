@@ -46,6 +46,11 @@ function Home() {
   };
 
   useEffect(() => {
+    const isOnboardingComplete = localStorage.getItem('isOnboardingComplete');
+    if (!isOnboardingComplete) localStorage.setItem('isOnboardingComplete', true);
+  }, []);
+
+  useEffect(() => {
     /* Do nothing */
   }, [currentPage]);
 

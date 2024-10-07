@@ -1,5 +1,10 @@
 import axios from "axios";
 
+export function getAppUrl() {
+  // return 'https://allindiaexam.azurewebsites.net';
+  return 'http://localhost:3001';
+} 
+
 export function post(url, data, headers, onComplete, onFailure) {
   const options = {};
   headers && (options["headers"] = headers);

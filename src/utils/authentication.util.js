@@ -58,12 +58,14 @@ export const authDetails = {
     buttonText: "Continue",
     fields: [
       {
+        key: "username",
         type: "input",
         specifier: null,
         placeholder: "Username",
         validation: null,
       },
       {
+        key: "password",
         type: "input",
         specifier: "password",
         placeholder: "Password",

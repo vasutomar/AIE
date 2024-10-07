@@ -6,9 +6,12 @@ import './Landing.scss';
 function Landing() {
 
     useEffect(() => {
-        setTimeout(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            window.location.href = "/aie/home"
+        } else {
             window.location.href = "/aie/auth"
-        }, 1000);
+        }
     }, []);
 
     return(
