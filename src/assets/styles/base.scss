@@ -9,6 +9,9 @@ $yellow: #ffd946;
   width: 12rem;
 }
 
+.w-100-perc {
+  width: 100%;
+}
 
 // Margins
 .m-8 {
@@ -45,6 +48,10 @@ $yellow: #ffd946;
   background-color: #E2DCDE;
 }
 
+.color-bg-C7DBE6 {
+  background-color: #C7DBE6;
+}
+
 //------------Font colors------------//
 
 .color-font-white {
@@ -72,8 +79,28 @@ $yellow: #ffd946;
 
 //------------Heights------------//
 
+.h-3 {
+  height: 3rem;
+}
+
 .h-4 {
   height: 4rem;
+}
+
+.h-10 {
+  height: 10rem;
+}
+
+.h-11 {
+  height: 11rem;
+}
+
+.h-12 {
+  height: 12rem;
+}
+
+.h-20 {
+  height: 20rem;
 }
 
 .min-height-200 {
@@ -97,4 +124,8 @@ $yellow: #ffd946;
 
 .justify-content-spacearound {
   justify-content: space-around;
+}
+
+.justify-content-center {
+  justify-content: center;
 }

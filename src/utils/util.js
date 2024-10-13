@@ -1,7 +1,8 @@
 const buttonClassMappings = {
     pb: 'primary-brown',
     py: 'primary-yellow',
-    inpGray: 'input-gray'
+    inpGray: 'input-gray',
+    primWhite: 'primary-white'
 }
 
 const bgColorMapping = {

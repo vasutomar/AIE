@@ -3,13 +3,6 @@ import "./Discussions.scss";
 import Card from "../../atoms/Card/Card";
 import { getbgColorFromType, getFontColorFromType } from "../../utils/util";
 
-import create from "../../assets/images/create.png";
-import face from "../../assets/images/face_4.png";
-import tick from "../../assets/images/checklist.png";
-import folder from "../../assets/images/folder_copy.png";
-import cloud from "../../assets/images/wb_cloudy.png";
-
-
 function Discussions() {
 
   const [data, setData] = useState([{
@@ -98,13 +91,6 @@ function Discussions() {
 
   return (
     <div className="discussion-layout">
-      <div className="user-panel">
-        <img src={tick} alt="todo list" title="todo list"/>
-        <img src={face}/>
-        <img src={create}/>
-        <img src={cloud}/>
-        <img src={folder}/>
-      </div>
       <div className="cards-container">
       {data.map((cardData) => {
         return <Card

@@ -1,0 +1,33 @@
+.create-post-container {
+    padding:0.5rem;
+
+    .header {
+        margin-bottom: 1rem;
+        .toggle-pill {
+            background-color: white;
+            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            font-size: 20px;
+            margin: 0 0.5rem;
+        }
+
+        .type-dropdown {
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            font-size: 20px;
+        }
+    }
+
+    .body {
+        .inp {
+            border: none;
+            border-radius: 20px;
+            margin: 0 0.5rem;
+            margin-bottom: 1rem;
+            text-align: start;
+            font-size: 24px;
+            padding-left: 0.5rem;
+        }
+    }
+}
