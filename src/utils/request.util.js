@@ -30,3 +30,16 @@ export function get(url, headers, onComplete, onFailure) {
       onFailure(error);
     });
 }
+
+export function patch(url, data, headers, onComplete, onFailure) {
+  const options = {};
+  headers && (options["headers"] = headers);
+  axios
+    .patch(url, data, options)
+    .then(function (response) {
+      onComplete(response);
+    })
+    .catch(function (error) {
+      onFailure(error);
+    });
+}

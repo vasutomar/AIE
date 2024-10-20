@@ -8,9 +8,13 @@ function Landing() {
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
-            window.location.href = "/aie/home"
+            const isOnboardingComplete = localStorage.getItem('isOnboardingComplete');
+            if (isOnboardingComplete === "false") {
+                window.location.href = "/aie/questions";
+            }
+            window.location.href = "/aie/home";
         } else {
-            window.location.href = "/aie/auth"
+            window.location.href = "/aie/auth";
         }
     }, []);
 

@@ -27,6 +27,7 @@ function Details({ authenticationDetails, setPage, page }) {
           setErrorMessage(response.data.error);
         } else {
           localStorage.setItem("token", response.data.data);
+          localStorage.setItem("username", payload['username']);
           window.location.href = "/aie/questions";
         }
       },
@@ -59,6 +60,7 @@ function Details({ authenticationDetails, setPage, page }) {
                 specifier={field.specifier}
                 type="inpGray"
                 key={field.key}
+                inputId={field.key}
               />
             );
           })}
