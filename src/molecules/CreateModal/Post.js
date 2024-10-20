@@ -1,8 +1,40 @@
 import React from "react";
 import Button from "../../atoms/Button/Button";
+import { post, getAppUrl } from '../../utils/request.util';
 
-function Post() {
+function Post({ closeModal }) {
   const typeOptions = ["Advice", "Doubt", "Celebrate", "Share"];
+
+  const createPost = () => {
+    const exam = localStorage.getItem('exam');
+    const username = localStorage.getItem('username');
+    const title = document.getElementById("create-post-title").value;
+    const body = document.getElementById("create-post-body").value;
+
+    const payload = {
+      exam,
+      title,
+      body,
+      username,
+      like_count: 0,
+      bookmark_count: 0,
+      comments: []
+    };
+    post(
+      `${getAppUrl()}/discussion/`,
+      payload,
+      null,
+      (response) => {
+        /*Do Nothing*/
+        console.log('create post response', response);  
+        closeModal();
+      },
+      (error) => {
+        /*Handle Error*/
+        console.log(error);
+      }
+    );
+  };
 
   return (
     <div className="create-post-container color-bg-C7DBE6">
@@ -22,12 +54,12 @@ function Post() {
         </div>
       </div>
       <div className="body flex-column">
-        <input className="h-3 inp" placeholder="Title..." />
-        <input className="h-20 inp" placeholder="Content..." />
+        <input className="h-3 inp" placeholder="Title..." id="create-post-title"/>
+        <input className="h-20 inp" placeholder="Content..." id="create-post-body"/>
       </div>
       <div className="footer flex-row justify-content-center">
         <Button
-          onClick={() => {}}
+          onClick={() => createPost()}
           extraClass="m-8 w-12 h-3"
           buttonType={"primWhite"}
           text={"Create Post"}

@@ -5,10 +5,10 @@ import "../Alert/Alert.scss";
 import "./CreateModal.scss";
 
 function CreateModal(props) {
-  const { type } = props;
+  const { type, closeModal } = props;
 
   return (<div className="modal-main">
-    {type == 'post' ? <Post /> : <Todo />}
+    {type === 'post' ? <Post closeModal={closeModal}/> : <Todo />}
   </div>);
 }
 

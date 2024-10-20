@@ -36,8 +36,10 @@ function Questions() {
   };
 
   const fetchNextQuestion = () => {
+    /* Currently configured to just store exam details */
     const currentAnswer = document.getElementById(questionData[questionIndex].questionId).value;
     if (currentAnswer) {
+      localStorage.setItem('exam', currentAnswer);
       const url = `${getAppUrl()}/profile/${localStorage.getItem('username')}`;
       patch(
         url,

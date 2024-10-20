@@ -110,7 +110,7 @@ function Home() {
 
   return (
     <>
-      {showCreateModal && <CreateModal type={'post'}/>}
+      {showCreateModal && <CreateModal closeModal={() => setShowCreateModal(false)} type={'post'}/>}
       <div className={"home-layout"}>
         <div className="sidebar">
           {features.map((f) => {
