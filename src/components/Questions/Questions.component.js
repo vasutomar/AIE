@@ -5,30 +5,15 @@ function Questions() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [questionData, setQuestionData] = useState([]);
 
-  useEffect(() => {
-    get(
-      `${getAppUrl()}/onboarding/questions`,
-      {
-        Authorization: localStorage.getItem("token"),
-      },
-      (response) => {
-        setQuestionData(response.data.data);
-      },
-      (error) => {
-        /*Handle Error*/
-      }
-    );
-  }, []);
-
   const getComponent = () => {
     if (!questionData.length) return;
-    const type = questionData[questionIndex].type;
+    const type = questionData[questionIndex].Type;
     if (type === "dropdown") {
-      const options = questionData[questionIndex].options;
+      const options = questionData[questionIndex].Options;
       return (
-        <select id={questionData[questionIndex].questionId}>
+        <select id={questionData[questionIndex].QuestionId}>
           {options.map((option) => {
-            return <option value={option}>{option}</option>;
+            return <option key={option+'_key'} value={option}>{option}</option>;
           })}
         </select>
       );
@@ -37,7 +22,7 @@ function Questions() {
 
   const fetchNextQuestion = () => {
     /* Currently configured to just store exam details */
-    const currentAnswer = document.getElementById(questionData[questionIndex].questionId).value;
+    const currentAnswer = document.getElementById(questionData[questionIndex].QuestionId).value;
     if (currentAnswer) {
       localStorage.setItem('exam', currentAnswer);
       const url = `${getAppUrl()}/profile/${localStorage.getItem('username')}`;
@@ -50,7 +35,7 @@ function Questions() {
           Authorization: localStorage.getItem("token"),
         },
         (response) => {
-          setQuestionData(response.data.data);
+          /* Do Nothing */
         },
         (error) => {
           /* Handle Error */
@@ -64,13 +49,30 @@ function Questions() {
     } else setQuestionIndex(questionIndex + 1);
   };
 
+  useEffect(() => {
+    if (!questionData.length) {
+      get(
+        `${getAppUrl()}/onboarding/questions`,
+        {
+          Authorization: localStorage.getItem("token"),
+        },
+        (response) => {
+          setQuestionData(response.data.data);
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
+    }
+  });
+
   return (
     <div className="question-layout">
-      <p>{questionData && questionData[questionIndex]?.title}</p>
+      <p>{questionData.length && questionData[questionIndex].Title}</p>
       <div className="question-container">
-        <span class="material-symbols-outlined">arrow_back_ios</span>
+        <span className="material-symbols-outlined">arrow_back_ios</span>
         {getComponent()}
-        <span class="material-symbols-outlined" onClick={fetchNextQuestion}>
+        <span className="material-symbols-outlined" onClick={fetchNextQuestion}>
           arrow_forward_ios
         </span>
       </div>

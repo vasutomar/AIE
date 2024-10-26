@@ -22,14 +22,9 @@ function Details({ authenticationDetails, setPage, page }) {
       payload,
       null,
       (response) => {
-        if (![200, 201].includes(response.data.statusCode)) {
-          setShowError(true);
-          setErrorMessage(response.data.error);
-        } else {
-          localStorage.setItem("token", `Bearer ${response.data.data}`);
-          localStorage.setItem("username", payload['username']);
-          window.location.href = "/aie/questions";
-        }
+        localStorage.setItem("token", `Bearer ${response.data.data}`);
+        localStorage.setItem("username", payload["username"]);
+        window.location.href = "/aie/questions";
       },
       (error) => {
         setShowError(true);
@@ -37,17 +32,25 @@ function Details({ authenticationDetails, setPage, page }) {
       }
     );
   }
-  
+
   return (
     <div className="details">
-      {showError && <Alert title={errorMessage} primaryAction={() => {}} secondaryAction={() => {setShowError(false)}}/>}
-      <div className={"logo-column" + ` ${showError && 'backdrop'}`}>
+      {showError && (
+        <Alert
+          title={errorMessage}
+          primaryAction={() => {}}
+          secondaryAction={() => {
+            setShowError(false);
+          }}
+        />
+      )}
+      <div className={"logo-column" + ` ${showError && "backdrop"}`}>
         <span class="material-icons" onClick={() => setPage("auth")}>
           arrow_back
         </span>
         <img src={logo} alt="website-logo" />
       </div>
-      <div className={"info-column" + ` ${showError && 'backdrop'}`}>
+      <div className={"info-column" + ` ${showError && "backdrop"}`}>
         <div className="headings">
           <h1>{title}</h1>
           <p>{subtitle}</p>
