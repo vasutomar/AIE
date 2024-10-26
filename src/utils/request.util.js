@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export function getAppUrl() {
-  // return 'https://allindiaexam.azurewebsites.net';
-  return 'http://localhost:3001';
+  // return 'https://allindiaexam.azurewebsites.net/api/v1';
+  return 'http://localhost:3001/api/v1';
 } 
 
 export function post(url, data, headers, onComplete, onFailure) {

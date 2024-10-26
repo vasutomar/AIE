@@ -20,14 +20,14 @@ export const authDetails = {
         validation: null,
       },
       {
-        key: "firstName",
+        key: "firstname",
         type: "input",
         specifier: null,
         placeholder: "First Name",
         validation: null,
       },
       {
-        key: "lastName",
+        key: "lastname",
         type: "input",
         specifier: null,
         placeholder: "Last Name",

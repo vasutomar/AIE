@@ -26,7 +26,7 @@ function Details({ authenticationDetails, setPage, page }) {
           setShowError(true);
           setErrorMessage(response.data.error);
         } else {
-          localStorage.setItem("token", response.data.data);
+          localStorage.setItem("token", `Bearer ${response.data.data}`);
           localStorage.setItem("username", payload['username']);
           window.location.href = "/aie/questions";
         }
