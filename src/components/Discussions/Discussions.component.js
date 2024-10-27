@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import "./Discussions.scss";
 import Card from "../../atoms/Card/Card";
 import { getbgColorFromType, getFontColorFromType } from "../../utils/util";
-import { getAppUrl, get } from "../../utils/request.util";
+import { getAppUrl, get, patch } from "../../utils/request.util";
 
 function Discussions() {
   const [data, setData] = useState();
+  const appUrl = getAppUrl();
+  const username = localStorage.getItem("username");
+  const headers = {};
+  headers.Authorization = localStorage.getItem("token");
 
   useEffect(() => {
     get(
-      `${getAppUrl()}/discussion/${localStorage.getItem('exam')}?page=1&items=20`,
-      {
-        Authorization: localStorage.getItem("token"),
-      },
+      `${appUrl}/discussion/${localStorage.getItem("exam")}?page=1&items=20`,
+      headers,
       (response) => {
         setData(response.data.data);
       },
@@ -21,20 +23,38 @@ function Discussions() {
       }
     );
   }, []);
-  
+
   function onLike(identifier) {
-    /* Write code to make API call to register like */
-    const index = data.findIndex((post) => { return post._id === identifier });
-    const dataCopy = [...data];
-    if (index >= 0) {
-      dataCopy[index].isLiked = !dataCopy[index].isLiked;
-    }
-    setData(dataCopy);
+    const like_count =
+      data[data.findIndex((e) => e._id === identifier)].like_count + 1;
+    patch(
+      `${appUrl}/discussion/identifier`,
+      {
+        like_count,
+        username,
+      },
+      headers,
+      function () {
+        const index = data.findIndex((post) => {
+          return post._id === identifier;
+        });
+        const dataCopy = [...data];
+        if (index >= 0) {
+          dataCopy[index].isLiked = !dataCopy[index].isLiked;
+        }
+        setData(dataCopy);
+      },
+      function (error) {
+        console.log("onlike error", error);
+      }
+    );
   }
 
   function onBookmark(identifier) {
     /* Write code to make API call to register bookmark */
-    const index = data.findIndex((post) => { return post._id === identifier });
+    const index = data.findIndex((post) => {
+      return post._id === identifier;
+    });
     const dataCopy = [...data];
     if (index >= 0) {
       dataCopy[index].isBookmarked = !dataCopy[index].isBookmarked;
@@ -44,7 +64,6 @@ function Discussions() {
 
   function fetchComments(index) {
     /* Write code to make API call to fetch comments */
-    
   }
 
   useEffect(() => {
@@ -54,20 +73,29 @@ function Discussions() {
   return (
     <div className="discussion-layout">
       <div className="cards-container">
-      {data && data.map((cardData) => {
-        return <Card
-          postId={cardData._id}
-          title={[cardData.username,' ',cardData.type || 'Shares',': ',cardData.title].join('')}
-          body={cardData.body}
-          bgColor={getbgColorFromType(cardData.type || 'Shares')}
-          fontColor={getFontColorFromType(cardData.type || 'Shares')}
-          isLiked={cardData.isLiked}
-          isBookmarked={cardData.isBookmarked}
-          onLike={onLike}
-          onBookmark={onBookmark}
-          fetchComments={fetchComments}
-        />
-      })}
+        {data &&
+          data.map((cardData) => {
+            return (
+              <Card
+                postId={cardData._id}
+                title={[
+                  cardData.username,
+                  " ",
+                  cardData.type || "Shares",
+                  ": ",
+                  cardData.title,
+                ].join("")}
+                body={cardData.body}
+                bgColor={getbgColorFromType(cardData.type || "Shares")}
+                fontColor={getFontColorFromType(cardData.type || "Shares")}
+                isLiked={cardData.isLiked}
+                isBookmarked={cardData.isBookmarked}
+                onLike={onLike}
+                onBookmark={onBookmark}
+                fetchComments={fetchComments}
+              />
+            );
+          })}
       </div>
     </div>
   );

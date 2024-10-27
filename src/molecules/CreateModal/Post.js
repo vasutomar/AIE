@@ -1,13 +1,13 @@
 import React from "react";
 import Button from "../../atoms/Button/Button";
-import { post, getAppUrl } from '../../utils/request.util';
+import { post, getAppUrl } from "../../utils/request.util";
 
 function Post({ closeModal }) {
   const typeOptions = ["Advice", "Doubt", "Celebrate", "Share"];
 
   const createPost = () => {
-    const exam = localStorage.getItem('exam');
-    const username = localStorage.getItem('username');
+    const exam = localStorage.getItem("exam");
+    const username = localStorage.getItem("username");
     const title = document.getElementById("create-post-title").value;
     const body = document.getElementById("create-post-body").value;
 
@@ -18,17 +18,19 @@ function Post({ closeModal }) {
       username,
       like_count: 0,
       bookmark_count: 0,
-      comments: []
+      comments: [],
+      liked_by: [],
+      bookmarked_by: []
     };
     post(
       `${getAppUrl()}/discussion/`,
       payload,
       {
-        Authorization: localStorage.getItem('token')
+        Authorization: localStorage.getItem("token"),
       },
       (response) => {
         /*Do Nothing*/
-        console.log('create post response', response);
+        console.log("create post response", response);
         window.location.reload();
         closeModal();
       },
@@ -44,7 +46,11 @@ function Post({ closeModal }) {
       <div className="header flex-row">
         <select className="type-dropdown">
           {typeOptions.map((option) => {
-            return <option key={option} value={option}>{option}</option>;
+            return (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            );
           })}
         </select>
         <div className="toggle-pill">
@@ -55,10 +61,21 @@ function Post({ closeModal }) {
           <label>Allow comments?</label>
           <input type="checkbox" id="comment-toggle" />
         </div>
+        <div className="cross-button">
+          <span class="material-symbols-outlined" onClick={closeModal}>close</span>
+        </div>
       </div>
       <div className="body flex-column">
-        <input className="h-3 inp" placeholder="Title..." id="create-post-title"/>
-        <input className="h-20 inp" placeholder="Content..." id="create-post-body"/>
+        <input
+          className="h-3 inp"
+          placeholder="Title..."
+          id="create-post-title"
+        />
+        <textarea
+          className="h-20 inp"
+          placeholder="Content..."
+          id="create-post-body"
+        />
       </div>
       <div className="footer flex-row justify-content-center">
         <Button
