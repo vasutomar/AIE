@@ -23,10 +23,13 @@ function Post({ closeModal }) {
     post(
       `${getAppUrl()}/discussion/`,
       payload,
-      null,
+      {
+        Authorization: localStorage.getItem('token')
+      },
       (response) => {
         /*Do Nothing*/
-        console.log('create post response', response);  
+        console.log('create post response', response);
+        window.location.reload();
         closeModal();
       },
       (error) => {
@@ -41,7 +44,7 @@ function Post({ closeModal }) {
       <div className="header flex-row">
         <select className="type-dropdown">
           {typeOptions.map((option) => {
-            return <option value={option}>{option}</option>;
+            return <option key={option} value={option}>{option}</option>;
           })}
         </select>
         <div className="toggle-pill">

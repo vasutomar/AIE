@@ -9,7 +9,7 @@ function Discussions() {
 
   useEffect(() => {
     get(
-      `${getAppUrl()}/discussion/${localStorage.getItem('exam')}`,
+      `${getAppUrl()}/discussion/${localStorage.getItem('exam')}?page=1&items=20`,
       {
         Authorization: localStorage.getItem("token"),
       },
@@ -24,7 +24,7 @@ function Discussions() {
   
   function onLike(identifier) {
     /* Write code to make API call to register like */
-    const index = data.findIndex((post) => { return post.id === identifier });
+    const index = data.findIndex((post) => { return post._id === identifier });
     const dataCopy = [...data];
     if (index >= 0) {
       dataCopy[index].isLiked = !dataCopy[index].isLiked;
@@ -34,7 +34,7 @@ function Discussions() {
 
   function onBookmark(identifier) {
     /* Write code to make API call to register bookmark */
-    const index = data.findIndex((post) => { return post.id === identifier });
+    const index = data.findIndex((post) => { return post._id === identifier });
     const dataCopy = [...data];
     if (index >= 0) {
       dataCopy[index].isBookmarked = !dataCopy[index].isBookmarked;
