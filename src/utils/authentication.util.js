@@ -1,3 +1,5 @@
+import { jwtDecode } from 'jwt-decode';
+
 export const authDetails = {
   signup: {
     title: "Join Us!",
@@ -74,3 +76,9 @@ export const authDetails = {
     ],
   },
 };
+
+export function getUserId() {
+  const token = localStorage.getItem('token');
+  const userData = jwtDecode(token);
+  return userData.UserId;
+}
