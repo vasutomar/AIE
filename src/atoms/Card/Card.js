@@ -20,7 +20,9 @@ function Card(cardProps) {
     isLiked,
     isBookmarked,
     onLike,
-    onBookmark
+    onBookmark,
+    toggleComments,
+    allowCommentToggle
   } = cardProps;
   const titleBackground = bgColor?.title;
   const bodyBackground = bgColor?.body;
@@ -54,7 +56,7 @@ function Card(cardProps) {
     { name: "Bookmark" },
   ];
   return (
-    <div className={`custom-card color-bg-${bodyBackground} ${cardClasses}`}>
+    <div id={`${postId}_post`} className={`custom-card color-bg-${bodyBackground} ${cardClasses}`}>
       <div
         className={`title-action-group color-bg-${bodyBackground} color-font-white`}
       >
@@ -77,7 +79,7 @@ function Card(cardProps) {
       </div>
       <div className={`body color-font-${fontColor}`}>{body}</div>
       {!hideButtons && (
-        <span className={`material-symbols-outlined color-font-${fontColor}`}>
+        <span className={`material-symbols-outlined color-font-${fontColor}`} onClick={() => allowCommentToggle && toggleComments(postId)}>
           keyboard_arrow_down
         </span>
       )}
