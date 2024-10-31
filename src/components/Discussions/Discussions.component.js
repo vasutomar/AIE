@@ -3,6 +3,7 @@ import "./Discussions.scss";
 import Card from "../../atoms/Card/Card";
 import { getbgColorFromType, getFontColorFromType } from "../../utils/util";
 import { getAppUrl, get, patch } from "../../utils/request.util";
+import { getUserId } from "../../utils/authentication.util";
 
 function Discussions() {
   const [data, setData] = useState();
@@ -24,20 +25,56 @@ function Discussions() {
     );
   }, []);
 
-  function onLike(identifier) {
-    // Write onLike code
+  function onLike(id) {
+    patch(
+      `${appUrl}/discussion/like/${id}`,
+      null,
+      headers,
+      function () {
+        console.log("like toggled");
+        window.location.reload();
+        // TODO : Remove this and make dynamic changes to data
+      },
+      function (error) {
+        console.log("on like toggle error", error);
+      }
+    );
   }
 
-  function onBookmark(identifier) {
-    /* Write code to make API call to register bookmark */
-    const index = data.findIndex((post) => {
-      return post.discussion_id === identifier;
-    });
-    const dataCopy = [...data];
-    if (index >= 0) {
-      dataCopy[index].isBookmarked = !dataCopy[index].isBookmarked;
-    }
-    setData(dataCopy);
+  function onBookmark(id) {
+    patch(
+      `${appUrl}/discussion/bookmark/${id}`,
+      null,
+      headers,
+      function () {
+        console.log("bookmark toggled");
+        window.location.reload();
+        // TODO : Remove this and make dynamic changes to data
+      },
+      function (error) {
+        console.log("on bookmark toggle error", error);
+      }
+    );
+  }
+
+  function onAddComment(id) {
+    const comment = document.getElementById(`${id}_new-comment`).value;
+    patch(
+      `${appUrl}/discussion/comment/${id}`,
+      {
+        comment,
+      },
+      headers,
+      function () {
+        console.log("comment added");
+        toggleCommentBox(id);
+        window.location.reload();
+        // TODO : Remove this and make dynamic changes to data
+      },
+      function (error) {
+        console.log("on comment error", error);
+      }
+    );
   }
 
   function toggleComments(id) {
@@ -68,24 +105,6 @@ function Discussions() {
     }
   }
 
-  function onAddComment(id) {
-    const comment = document.getElementById(`${id}_new-comment`).value;
-    patch(
-      `${appUrl}/discussion/comment/${id}`,
-      {
-        comment,
-      },
-      headers,
-      function () {
-        console.log("comment added");
-        toggleCommentBox(id);
-      },
-      function (error) {
-        console.log("on comment error", error);
-      }
-    );
-  }
-
   useEffect(() => {
     /*Do Nothing*/
   }, [data]);
@@ -109,8 +128,8 @@ function Discussions() {
                   body={cardData.body}
                   bgColor={getbgColorFromType(cardData.type || "Shares")}
                   fontColor={getFontColorFromType(cardData.type || "Shares")}
-                  isLiked={cardData.isLiked}
-                  isBookmarked={cardData.isBookmarked}
+                  isLiked={cardData.liked_by.includes(getUserId())}
+                  isBookmarked={cardData.bookmarked_by.includes(getUserId())}
                   onLike={onLike}
                   onBookmark={onBookmark}
                   toggleComments={toggleComments}
