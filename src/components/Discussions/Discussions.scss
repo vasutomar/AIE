@@ -16,9 +16,27 @@
     .comments {
         width: 95%;
         border-radius: 20px;
-
         .comment {
             padding: 0.25rem 0 0.25rem 1rem;
+            font-size: 18px;
+            .comment-input {
+                outline: none;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 2px white solid;
+                min-width: 50%;
+                font-size: 18px;
+            }
+
+            .comment-btn {
+                border-radius: 0 !important;
+                outline: none;
+                margin-left: 2rem;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
         }:last-child {
             border-radius: 0 0 20px 20px;
         }

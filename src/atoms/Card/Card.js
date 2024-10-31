@@ -22,7 +22,8 @@ function Card(cardProps) {
     onLike,
     onBookmark,
     toggleComments,
-    allowCommentToggle
+    allowCommentToggle,
+    toggleCommentBox
   } = cardProps;
   const titleBackground = bgColor?.title;
   const bodyBackground = bgColor?.body;
@@ -69,7 +70,7 @@ function Card(cardProps) {
           <div className={`buttons color-font-${fontColor}`}>
             {buttons.map((button) => {
               return button == buttons[1] ? (
-                <span class="material-symbols-outlined">{button.name}</span>
+                <span class="material-symbols-outlined" onClick={() => toggleCommentBox(postId)}>{button.name}</span>
               ) : (
                 <img src={getImgSrc(button)} onClick={() => getOperation(button)(postId)}/>
               );

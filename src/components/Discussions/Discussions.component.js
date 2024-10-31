@@ -25,35 +25,13 @@ function Discussions() {
   }, []);
 
   function onLike(identifier) {
-    const like_count =
-      data[data.findIndex((e) => e._id === identifier)].like_count + 1;
-    patch(
-      `${appUrl}/discussion/identifier`,
-      {
-        like_count,
-        username,
-      },
-      headers,
-      function () {
-        const index = data.findIndex((post) => {
-          return post._id === identifier;
-        });
-        const dataCopy = [...data];
-        if (index >= 0) {
-          dataCopy[index].isLiked = !dataCopy[index].isLiked;
-        }
-        setData(dataCopy);
-      },
-      function (error) {
-        console.log("onlike error", error);
-      }
-    );
+    // Write onLike code
   }
 
   function onBookmark(identifier) {
     /* Write code to make API call to register bookmark */
     const index = data.findIndex((post) => {
-      return post._id === identifier;
+      return post.discussion_id === identifier;
     });
     const dataCopy = [...data];
     if (index >= 0) {
@@ -68,12 +46,44 @@ function Discussions() {
     if (commentSection.style.display) {
       // Showing comment section
       post.style.borderRadius = "20px 20px 0 0";
-      commentSection.style.removeProperty('display');
+      commentSection.style.removeProperty("display");
     } else {
       // Removing comment section
       post.style.borderRadius = "20px";
       commentSection.style.display = "none";
     }
+  }
+
+  function toggleCommentBox(id) {
+    const post = document.getElementById(`${id}_post`);
+    const commentBox = document.getElementById(`${id}_comment-box`);
+    if (commentBox.style.display) {
+      // Showing comment section
+      post.style.borderRadius = "20px 20px 0 0";
+      commentBox.style.removeProperty("display");
+    } else {
+      // Removing comment section
+      post.style.borderRadius = "20px";
+      commentBox.style.display = "none";
+    }
+  }
+
+  function onAddComment(id) {
+    const comment = document.getElementById(`${id}_new-comment`).value;
+    patch(
+      `${appUrl}/discussion/comment/${id}`,
+      {
+        comment,
+      },
+      headers,
+      function () {
+        console.log("comment added");
+        toggleCommentBox(id);
+      },
+      function (error) {
+        console.log("on comment error", error);
+      }
+    );
   }
 
   useEffect(() => {
@@ -88,7 +98,7 @@ function Discussions() {
             return (
               <>
                 <Card
-                  postId={cardData._id}
+                  postId={cardData.discussion_id}
                   title={[
                     cardData.username,
                     " ",
@@ -104,14 +114,42 @@ function Discussions() {
                   onLike={onLike}
                   onBookmark={onBookmark}
                   toggleComments={toggleComments}
+                  toggleCommentBox={toggleCommentBox}
                   allowCommentToggle={cardData.comments.length}
                 />
-                <div style={{"display": "none"}} className="comments" id={`${cardData._id}_comment-section`}>
+                <div
+                  style={{ display: "none" }}
+                  className="comments"
+                  id={`${cardData.discussion_id}_comment-section`}
+                >
                   {cardData.comments.map((comment) => {
                     return (
-                      <div className={`comment color-font-white color-bg-79A3D3`}>{comment}</div>
-                    )
+                      <div
+                        className={`comment color-font-white color-bg-79A3D3`}
+                      >
+                        {comment.username + " : " + comment.comment}
+                      </div>
+                    );
                   })}
+                </div>
+                <div
+                  style={{ display: "none" }}
+                  className="comments"
+                  id={`${cardData.discussion_id}_comment-box`}
+                >
+                  <div className={`comment color-font-white color-bg-79A3D3`}>
+                    <input
+                      className="comment-input color-font-white color-bg-79A3D3"
+                      type="text"
+                      id={`${cardData.discussion_id}_new-comment`}
+                    ></input>
+                    <button
+                      className="comment-btn color-font-white color-bg-274C77"
+                      onClick={() => onAddComment(cardData.discussion_id)}
+                    >
+                      Done
+                    </button>
+                  </div>
                 </div>
               </>
             );
