@@ -82,3 +82,9 @@ export function getUserId() {
   const userData = jwtDecode(token);
   return userData.UserId;
 }
+
+export function getUsername() {
+  const token = localStorage.getItem('token');
+  const userData = jwtDecode(token);
+  return userData.Username;
+}

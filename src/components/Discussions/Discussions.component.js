@@ -119,7 +119,7 @@ function Discussions() {
                 <Card
                   postId={cardData.discussion_id}
                   title={[
-                    cardData.username,
+                    localStorage.getItem('username'),
                     " ",
                     cardData.type || "Shares",
                     ": ",
