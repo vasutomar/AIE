@@ -1,8 +1,5 @@
 import React, {useState} from "react";
 import "./GroupLanding.scss";
-
-
-
 import Card from "../../../atoms/Card/Card";
 import VerticalLine from "../../../atoms/VerticalLine/VerticalLine";
 

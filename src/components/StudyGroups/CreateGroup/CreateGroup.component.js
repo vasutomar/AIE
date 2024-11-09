@@ -9,9 +9,60 @@ import person5 from "../../../assets/images/person5.png";
 import person6 from "../../../assets/images/person6.png";
 import person7 from "../../../assets/images/person7.png";
 import person8 from "../../../assets/images/person8.png";
+import VerticalLine from "../../../atoms/VerticalLine/VerticalLine";
 
 function CreateGroup({ info }) {
   const image = info.image;
+
+  const FAQData = [
+    {
+      question: "What all can I do?",
+      answer: [
+        {
+          title: "Collaborative problem solving",
+          subtitle:
+            "Share different approaches and solutions to the same issue for a broader understanding.",
+        },
+        {
+          title: "Sharing resources",
+          subtitle:
+            "Exchange study materials like notes, articles, books, and links to helpful videos or academic papers.",
+        },
+        {
+          title: "General Discussions",
+          subtitle:
+            "Discuss recent news or trends related to your field of study for practical insights.",
+        },
+        {
+          title: "Accountability tool",
+          subtitle:
+            "Set goals for each member and check in regularly to ensure progress is being made.",
+        },
+        {
+          title: "Q&A Session",
+          subtitle:
+            "Hold timed Q&A rounds for quick clarifications on study material.",
+        },
+        {
+          title: "Peer Teaching",
+          subtitle:
+            "Take turns explaining topics to the group, as teaching others helps reinforce your own understanding.",
+        },
+        {
+          title: "Study tips and Strategy",
+          subtitle: "Share personal study techniques and productivity hacks.",
+        },
+      ],
+      type: "list-with-subtitle",
+    },
+    {
+      question: "How many members can I add?",
+      answer:
+        "Regular users can add upto 4 memebers.Star members can add upto 6 members",
+      type: "simple-text",
+    },
+  ];
+
   const searchResult = [
     {
       name: "Rahul",
@@ -32,16 +83,24 @@ function CreateGroup({ info }) {
       name: "Rahul",
       key: "128fandsu129",
       img: person1,
+      isOnline: true,
     },
     {
       name: "Samantha",
       key: "128fandsu139",
       img: person2,
+      isOnline: false,
     },
     {
       name: "Sam",
       key: "128fandsu179",
       img: person3,
+      isOnline: true,
+    },
+    {
+      name: "Sarthak",
+      key: "128fandsu179",
+      img: person8,
     },
   ];
 
@@ -61,6 +120,11 @@ function CreateGroup({ info }) {
       key: "128fandsu179",
       img: person6,
     },
+    {
+      name: "Sarthak",
+      key: "128fandsu179",
+      img: person8,
+    },
   ];
 
   const memberOptions = [1, 2, 3, 4, 5, 6];
@@ -79,7 +143,7 @@ function CreateGroup({ info }) {
       <div className="main-section">
         <div className="details-section">
           <div className="details-card">
-            <h2>ENTER GROUP DETAILS</h2>
+            <h2 className="underline">ENTER GROUP DETAILS</h2>
             <div className="flex-row detail">
               <label>Name</label>
               <input className="nameInput"></input>
@@ -106,7 +170,7 @@ function CreateGroup({ info }) {
         <div className="members-section">
           <div className="add-section">
             <div className="add-box">
-              <h2>ADD MEMBERS</h2>
+              <h2 className="underline">ADD MEMBERS</h2>
               <select id={"memberSearch"}>
                 <option value="" disabled selected>
                   Select your option
@@ -121,7 +185,7 @@ function CreateGroup({ info }) {
               </select>
             </div>
             <div className="friends-box">
-              <h2>PICK FROM FRIENDS</h2>
+              <h2 className="underline">PICK FROM FRIENDS</h2>
               <div className="friends">
                 {friends.map((friend) => {
                   return (
@@ -135,21 +199,64 @@ function CreateGroup({ info }) {
             </div>
           </div>
           <div className="list-section">
-            <h2>MEMBER LIST</h2>
+            <h2 className="underline">MEMBER LIST</h2>
             {addedMembers.map((member) => {
               return (
                 <div className="member-status">
                   <img src={member.img} />
-                  <div>{member.name}</div>
+                  <div className="flex-column">
+                    <div>{member.name}</div>
+                    {member.isOnline ? (
+                      <div className="flex-row align-content-center">
+                        Online
+                        <div className="green-cricle" />
+                      </div>
+                    ) : (
+                      <div className="flex-row align-content-center">
+                        Offline
+                        <div className="red-cricle" />
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
         </div>
+        <div className="action-section">
+          <button>Create</button>
+          <button>Cancel</button>
+        </div>
       </div>
+      <VerticalLine height={"page"} />
       <div className="faq-section">
-        <h1>{info.title} GROUP</h1>
-        <h3>FAQ</h3>
+        <div className="headings">
+          <h1 className="m-2 underline">{info.title} GROUP</h1>
+          <h3 className="color-font-707070 m-2">FAQ</h3>
+        </div>
+        <div className="questions">
+          {FAQData.map((data) => {
+            return (
+              <>
+                <h2 className="underline">{data.question}</h2>
+                {data.type == "simple-text" ? (
+                  <div>{data.answer}</div>
+                ) : (
+                  <ol>
+                    {data.answer.map((answer) => {
+                      return (
+                        <li>
+                          <h4 className="m-2">{answer.title}</h4>
+                          <div>{answer.subtitle}</div>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                )}
+              </>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

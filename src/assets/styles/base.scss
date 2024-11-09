@@ -18,6 +18,10 @@ $yellow: #ffd946;
   margin: 8px;
 }
 
+.m-2 {
+  margin: 2px;
+}
+
 //------------Background colors------------//
 
 .color-bg-A3CEF1 {
@@ -68,6 +72,11 @@ $yellow: #ffd946;
     filter: saturate(100%) brightness(0%);
   }
 }
+
+.color-font-707070 {
+  color: #707070;
+}
+
 
 //------------Font alignment------------//
 
@@ -126,10 +135,22 @@ $yellow: #ffd946;
   flex-direction: column;
 }
 
+
+
 .justify-content-spacearound {
   justify-content: space-around;
 }
 
 .justify-content-center {
   justify-content: center;
+}
+
+.align-content-center {
+  align-items: center;
+}
+
+//------------Decoration------------//
+
+.underline {
+  text-decoration: underline;
 }
