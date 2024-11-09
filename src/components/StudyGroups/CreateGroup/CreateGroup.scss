@@ -1,0 +1,144 @@
+.creategroup-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 1rem;
+
+    .main-section {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0 1rem;
+
+        .details-section {
+            display: flex;
+            .details-card {
+                flex: 2;
+                background-color: #E2DCDE;
+                border-radius: 10px;
+                padding: 1rem;
+                
+                .detail {
+                    margin: 1rem 0;
+                    justify-content: space-between;
+                    width: 50%;
+                    
+                    .nameInput {
+                        background-color: #E2DCDE;
+                        border: none;
+                        border-bottom: 2px solid black;
+                    }
+
+                    .member-count-holder {
+                        justify-content: space-around;
+                        width: 55%;
+                        
+                        .number {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            background-color: black;
+                            color: white;
+                            width: 20px;
+                            height: 20px;
+                            text-align: center;
+                            vertical-align: middle;
+                            border: 2px solid white;
+                            border-radius: 2px;
+                            cursor: pointer;
+                        }
+
+                        .color {
+                            width: 20px;
+                            height: 20px;
+                            border: 2px solid white;
+                            border-radius: 2px;
+                            cursor: pointer;
+                        }
+                    }
+
+                    label {
+                        margin-right: 1rem;
+                    }
+                }
+            }
+
+            img {
+                flex: 1;
+                max-width: 200px;
+                max-height: 200px;
+            }
+        }
+
+        .members-section {
+            display: flex;
+            flex-direction: row;
+
+            .add-section {
+                flex: 4;
+                display: flex;
+                flex-direction: row;
+
+                .add-box {
+                    flex: 1.2;
+                }
+
+                .friends-box {
+                    flex: 2;
+                    
+                    .friends {
+                        background-color: #F8F4E3;
+                        display: grid;
+                        grid-template-columns: 50% 50%;
+                        padding: 1rem;
+
+                        .friend-holder {
+                            margin-top: 1rem;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        img {
+                            height: 50px;
+                            width: 50px;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+
+            .list-section {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                margin-left: 1rem;
+
+                .member-status {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    margin: 1rem 0;
+
+                    img {
+                        margin-left: 3rem;
+                        max-width: 80px;
+                        max-height: 80px;
+                    }
+                }
+
+                h2 {
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .faq-section {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+}

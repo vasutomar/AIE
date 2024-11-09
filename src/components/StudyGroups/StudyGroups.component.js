@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./StudyGroups.scss";
 
+import GroupLanding from "./GroupLanding/GroupLanding.component";
+import CreateGroup from "./CreateGroup/CreateGroup.component";
 import text from "../../assets/images/text.png";
 import video from "../../assets/images/audio.png";
 import events from "../../assets/images/video.png";
 import audio from "../../assets/images/events.png";
-
-import Card from "../../atoms/Card/Card";
-import VerticalLine from "../../atoms/VerticalLine/VerticalLine";
-
 function StudyGroups() {
+  const [groupToCreate, setGroupToCreate] = useState("TEXT");
+  const [showCreateScreen, setShowCreateScreen] = useState(false);
   const cardData = [
     {
       title: "TEXT",
@@ -36,40 +36,17 @@ function StudyGroups() {
       image: events,
     },
   ];
-
-  const extraClasses = {
-    cardClasses: "padding-1-1-2-1 min-height-200 cursor-pointer",
-    titleClasses: "font-center",
-  };
-
   return (
     <div className="studygroup-layout">
-      <select>
-        <option value={[]}>Search for a study group...</option>
-      </select>
-      <div className="card-bracket">
-        {cardData.map((card_data, index) => {
-          return (
-            <>
-              <div className="card-image-block">
-                <Card
-                  title={card_data.title}
-                  body={card_data.content}
-                  bgColor={{
-                    title: "E2DCDE",
-                    body: "E2DCDE",
-                  }}
-                  fontColor={"black"}
-                  hideButtons
-                  extraClasses={extraClasses}
-                />
-                <img src={card_data.image} />
-              </div>
-              {index < 3 && <VerticalLine height={300} />}
-            </>
-          );
-        })}
-      </div>
+      {!showCreateScreen ? (
+        <GroupLanding
+          setGroupToCreate={setGroupToCreate}
+          setShowCreateScreen={setShowCreateScreen}
+          cardData={cardData}
+        />
+      ) : (
+        <CreateGroup info={cardData.find(data => data.title === groupToCreate)}/>
+      )}
     </div>
   );
 }
