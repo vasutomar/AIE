@@ -25,7 +25,7 @@ function Questions() {
     const currentAnswer = document.getElementById(questionData[questionIndex].QuestionId).value;
     if (currentAnswer) {
       localStorage.setItem('exam', currentAnswer);
-      const url = `${getAppUrl()}/profile/${localStorage.getItem('username')}`;
+      const url = `${getAppUrl()}/profile/}`;
       patch(
         url,
         {

@@ -1,0 +1,58 @@
+.yourgroup-layout {
+    height: 100%;
+    margin-left: 1rem;
+    .group-display-card {
+        margin: 0 1rem 1rem 0;
+        background-color: #F1E4E8;
+        border-radius: 10px;
+
+        .nmt-section {
+            margin-left: 1rem;
+            flex: 1;
+            .members {
+                margin-bottom: 0.5rem;
+                img {
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    margin: 0 0.5rem;
+                }
+            }
+
+            .type {
+                margin: 1rem 0;
+                img {
+                    margin-right: 0.5rem;
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+
+        .about-section {
+            flex: 2;
+            margin-right: 1rem;
+        }
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+        button {
+            height: 40px;
+            width: 178px;
+            margin: 2rem;
+            border: none;
+            cursor: pointer;
+            
+            color: white;
+            background-color: #68CC58;
+            box-shadow: #4B9140 5px 5px;
+            font-size: 20px;
+        }:active {
+            box-shadow: none;
+            translate: 5px 5px;
+        }
+    }
+    
+}

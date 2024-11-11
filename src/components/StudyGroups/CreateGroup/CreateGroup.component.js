@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CreateGroup.scss";
 
 import person1 from "../../../assets/images/person1.png";
@@ -10,9 +10,21 @@ import person6 from "../../../assets/images/person6.png";
 import person7 from "../../../assets/images/person7.png";
 import person8 from "../../../assets/images/person8.png";
 import VerticalLine from "../../../atoms/VerticalLine/VerticalLine";
+import { getAppUrl, post } from "../../../utils/request.util";
 
-function CreateGroup({ info }) {
-  const image = info.image;
+function CreateGroup({ info, setPage }) {
+  const { image } = info;
+  const colorOptions = [
+    "A3CEF1",
+    "274C77",
+    "D8FCCF",
+    "C7DBE6",
+    "79A3D3",
+    "F0D8E0",
+  ];
+  const [peerCount, setPeerCount] = useState(1);
+  const [groupColor, setGroupColor] = useState(colorOptions[0]);
+  const [groupName, setGroupName] = useState("");
 
   const FAQData = [
     {
@@ -123,20 +135,44 @@ function CreateGroup({ info }) {
     {
       name: "Sarthak",
       key: "128fandsu179",
-      img: person8,
+      img: person7,
     },
   ];
 
   const memberOptions = [1, 2, 3, 4, 5, 6];
 
-  const colorOptions = [
-    "A3CEF1",
-    "274C77",
-    "D8FCCF",
-    "C7DBE6",
-    "79A3D3",
-    "F0D8E0",
-  ];
+  const cancelCreation = () => {
+    setPage('select-group');
+  };
+
+  const creategroup = () => {
+    const members = addedMembers.map(member => {return {
+      name: member.name,
+      id: member.key
+    }});
+    const exam = localStorage.getItem('exam');
+    const url = `${getAppUrl()}/group`;
+    post(
+      url,
+      {
+        name: groupName,
+        color: groupColor,
+        member_count: peerCount,
+        members: members,
+        exam: exam,
+        group_type: info.title
+      },
+      {
+        Authorization: localStorage.getItem("token"),
+      },
+      (response) => {
+        /* Do Nothing */
+      },
+      (error) => {
+        /* Handle Error */
+      }
+    )
+  };
 
   return (
     <div className="creategroup-layout">
@@ -146,13 +182,27 @@ function CreateGroup({ info }) {
             <h2 className="underline">ENTER GROUP DETAILS</h2>
             <div className="flex-row detail">
               <label>Name</label>
-              <input className="nameInput"></input>
+              <input
+                onChange={(e) => {
+                  setGroupName(e.target.value);
+                }}
+                className="nameInput"
+              ></input>
             </div>
             <div className="flex-row detail">
               <label>Peer Count</label>
               <div className="flex-row member-count-holder">
                 {memberOptions.map((count) => {
-                  return <div className="number">{count}</div>;
+                  return (
+                    <div
+                      onClick={() => {
+                        setPeerCount(count);
+                      }}
+                      className="number"
+                    >
+                      {count}
+                    </div>
+                  );
                 })}
               </div>
             </div>
@@ -160,7 +210,14 @@ function CreateGroup({ info }) {
               <label>Color</label>
               <div className="flex-row member-count-holder">
                 {colorOptions.map((color) => {
-                  return <div className={`color-bg-${color} color`} />;
+                  return (
+                    <div
+                      onClick={() => {
+                        setGroupColor(color);
+                      }}
+                      className={`color-bg-${color} color`}
+                    />
+                  );
                 })}
               </div>
             </div>
@@ -207,12 +264,12 @@ function CreateGroup({ info }) {
                   <div className="flex-column">
                     <div>{member.name}</div>
                     {member.isOnline ? (
-                      <div className="flex-row align-content-center">
+                      <div className="flex-row align-items-center">
                         Online
                         <div className="green-cricle" />
                       </div>
                     ) : (
-                      <div className="flex-row align-content-center">
+                      <div className="flex-row align-items-center">
                         Offline
                         <div className="red-cricle" />
                       </div>
@@ -224,8 +281,8 @@ function CreateGroup({ info }) {
           </div>
         </div>
         <div className="action-section">
-          <button>Create</button>
-          <button>Cancel</button>
+          <button onClick={() => creategroup()}>Create</button>
+          <button onClick={() => cancelCreation()}>Cancel</button>
         </div>
       </div>
       <VerticalLine height={"page"} />

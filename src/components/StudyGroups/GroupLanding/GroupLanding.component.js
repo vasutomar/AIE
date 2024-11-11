@@ -4,7 +4,7 @@ import Card from "../../../atoms/Card/Card";
 import VerticalLine from "../../../atoms/VerticalLine/VerticalLine";
 
 function GroupLanding({
-    setShowCreateScreen,
+    setPage,
     setGroupToCreate,
     cardData
 }) {
@@ -15,7 +15,7 @@ function GroupLanding({
 
   function showCreateScreen(type) {
     setGroupToCreate(type);
-    setShowCreateScreen(true);
+    setPage('create-group');
   }
 
   return (
