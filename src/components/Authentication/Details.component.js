@@ -22,9 +22,23 @@ function Details({ authenticationDetails, setPage, page }) {
       payload,
       null,
       (response) => {
-        localStorage.setItem("token", `Bearer ${response.data.data}`);
-        localStorage.setItem("username", payload["username"]);
-        window.location.href = "/aie/questions";
+        if (response.data.statusCode == 200) {
+          const {
+            exam,
+            token
+          } = response.data.data;
+          localStorage.setItem("token", `Bearer ${token}`);
+          localStorage.setItem("username", payload["username"]);
+          if (exam) {
+            localStorage.setItem("exam", exam);
+            window.location.href = "/aie/home";
+          } else {
+            window.location.href = "/aie/questions";
+          }
+        } else {
+          setShowError(true);
+          setErrorMessage('haha');
+        }
       },
       (error) => {
         setShowError(true);
