@@ -85,6 +85,9 @@ function Home() {
       case "Study groups": {
         return <StudyGroups />;
       }
+      default: {
+        return <></>;
+      }
     }
   };
 
@@ -92,6 +95,7 @@ function Home() {
     switch (option) {
       case "create": {
         setShowCreateModal(true);
+        break;
       }
       default:
         break;
@@ -116,6 +120,8 @@ function Home() {
           {features.map((f) => {
             return (
               <img
+                alt={f.name}
+                key={f.name}
                 className={f.name === currentPage ? "selected" : ""}
                 title={f.name}
                 src={f.logo}

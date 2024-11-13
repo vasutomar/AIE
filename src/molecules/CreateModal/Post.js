@@ -62,7 +62,7 @@ function Post({ closeModal }) {
           <input type="checkbox" id="comment-toggle" />
         </div>
         <div className="cross-button">
-          <span class="material-symbols-outlined" onClick={closeModal}>close</span>
+          <span className="material-symbols-outlined" onClick={closeModal}>close</span>
         </div>
       </div>
       <div className="body flex-column">

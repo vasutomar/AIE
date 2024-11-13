@@ -22,11 +22,16 @@ function Details({ authenticationDetails, setPage, page }) {
       payload,
       null,
       (response) => {
-        if (response.data.statusCode == 200) {
+        const {
+          statusCode,
+          message,
+          data
+        } = response.data;
+        if (statusCode === 200) {
           const {
-            exam,
-            token
-          } = response.data.data;
+            token,
+            exam
+          } = data;
           localStorage.setItem("token", `Bearer ${token}`);
           localStorage.setItem("username", payload["username"]);
           if (exam) {
@@ -37,7 +42,7 @@ function Details({ authenticationDetails, setPage, page }) {
           }
         } else {
           setShowError(true);
-          setErrorMessage('haha');
+          setErrorMessage(message);
         }
       },
       (error) => {
@@ -58,13 +63,13 @@ function Details({ authenticationDetails, setPage, page }) {
           }}
         />
       )}
-      <div className={"logo-column" + ` ${showError && "backdrop"}`}>
-        <span class="material-icons" onClick={() => setPage("auth")}>
+      <div className={`logo-column ${showError && "backdrop"}`}>
+        <span className="material-icons" onClick={() => setPage("auth")}>
           arrow_back
         </span>
         <img src={logo} alt="website-logo" />
       </div>
-      <div className={"info-column" + ` ${showError && "backdrop"}`}>
+      <div className={`info-column ${showError && "backdrop"}`}>
         <div className="headings">
           <h1>{title}</h1>
           <p>{subtitle}</p>

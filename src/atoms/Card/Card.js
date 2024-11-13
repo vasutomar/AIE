@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { getClassFromType } from "../../utils/util";
+import React from "react";
 
 import like from "../../assets/images/like_empty.svg";
 import liked from "../../assets/images/like_filled.svg";
@@ -37,7 +36,7 @@ function Card(cardProps) {
   }
 
   const getImgSrc = (name) => {
-    if (name == buttons[0]) {
+    if (name === buttons[0]) {
       return isLiked ? liked : like;
     } else {
       return isBookmarked ? bookmarked : bookmark;
@@ -45,7 +44,7 @@ function Card(cardProps) {
   };
 
   const getOperation = (name) => {
-    if (name == buttons[0]) {
+    if (name === buttons[0]) {
       return onLike;
     }
     return onBookmark;
@@ -69,10 +68,10 @@ function Card(cardProps) {
         {!hideButtons && (
           <div className={`buttons color-font-${fontColor}`}>
             {buttons.map((button) => {
-              return button == buttons[1] ? (
-                <span class="material-symbols-outlined" onClick={() => toggleCommentBox(postId)}>{button.name}</span>
+              return button === buttons[1] ? (
+                <span key={button.name} className="material-symbols-outlined" onClick={() => toggleCommentBox(postId)}>{button.name}</span>
               ) : (
-                <img src={getImgSrc(button)} onClick={() => getOperation(button)(postId)}/>
+                <img key={button.name} alt={`button-${button.name}`} src={getImgSrc(button)} onClick={() => getOperation(button)(postId)}/>
               );
             })}
           </div>

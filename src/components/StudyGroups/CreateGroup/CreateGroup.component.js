@@ -28,6 +28,7 @@ function CreateGroup({ info, setPage }) {
 
   const FAQData = [
     {
+      key: "what-all-can-i-do",
       question: "What all can I do?",
       answer: [
         {
@@ -68,6 +69,7 @@ function CreateGroup({ info, setPage }) {
       type: "list-with-subtitle",
     },
     {
+      key: "how-many-can-i-add",
       question: "How many members can I add?",
       answer:
         "Regular users can add upto 4 memebers.Star members can add upto 6 members",
@@ -111,7 +113,7 @@ function CreateGroup({ info, setPage }) {
     },
     {
       name: "Sarthak",
-      key: "128fandsu179",
+      key: "128fandsu180",
       img: person8,
     },
   ];
@@ -134,7 +136,7 @@ function CreateGroup({ info, setPage }) {
     },
     {
       name: "Sarthak",
-      key: "128fandsu179",
+      key: "128fandsu180",
       img: person7,
     },
   ];
@@ -142,15 +144,17 @@ function CreateGroup({ info, setPage }) {
   const memberOptions = [1, 2, 3, 4, 5, 6];
 
   const cancelCreation = () => {
-    setPage('select-group');
+    setPage("select-group");
   };
 
   const creategroup = () => {
-    const members = addedMembers.map(member => {return {
-      name: member.name,
-      id: member.key
-    }});
-    const exam = localStorage.getItem('exam');
+    const members = addedMembers.map((member) => {
+      return {
+        name: member.name,
+        id: member.key,
+      };
+    });
+    const exam = localStorage.getItem("exam");
     const url = `${getAppUrl()}/group`;
     post(
       url,
@@ -160,7 +164,7 @@ function CreateGroup({ info, setPage }) {
         member_count: peerCount,
         members: members,
         exam: exam,
-        group_type: info.title
+        group_type: info.title,
       },
       {
         Authorization: localStorage.getItem("token"),
@@ -171,7 +175,7 @@ function CreateGroup({ info, setPage }) {
       (error) => {
         /* Handle Error */
       }
-    )
+    );
   };
 
   return (
@@ -195,6 +199,7 @@ function CreateGroup({ info, setPage }) {
                 {memberOptions.map((count) => {
                   return (
                     <div
+                      key={`key-member-${count}`}
                       onClick={() => {
                         setPeerCount(count);
                       }}
@@ -212,6 +217,7 @@ function CreateGroup({ info, setPage }) {
                 {colorOptions.map((color) => {
                   return (
                     <div
+                    key={`key-color-${color}`}
                       onClick={() => {
                         setGroupColor(color);
                       }}
@@ -222,7 +228,7 @@ function CreateGroup({ info, setPage }) {
               </div>
             </div>
           </div>
-          <img src={image} />
+          <img alt={'group-type-image'} src={image} />
         </div>
         <div className="members-section">
           <div className="add-section">
@@ -246,8 +252,8 @@ function CreateGroup({ info, setPage }) {
               <div className="friends">
                 {friends.map((friend) => {
                   return (
-                    <div className="flex-row friend-holder">
-                      <img src={friend.img} />
+                    <div key={friend.key} className="flex-row friend-holder">
+                      <img alt={'friend-logo'} src={friend.img} />
                       <div>{friend.name}</div>
                     </div>
                   );
@@ -259,8 +265,8 @@ function CreateGroup({ info, setPage }) {
             <h2 className="underline">MEMBER LIST</h2>
             {addedMembers.map((member) => {
               return (
-                <div className="member-status">
-                  <img src={member.img} />
+                <div key={member.key} className="member-status">
+                  <img alt={'added-member-logo'} src={member.img} />
                   <div className="flex-column">
                     <div>{member.name}</div>
                     {member.isOnline ? (
@@ -294,15 +300,15 @@ function CreateGroup({ info, setPage }) {
         <div className="questions">
           {FAQData.map((data) => {
             return (
-              <>
+              <div key={data.key}>
                 <h2 className="underline">{data.question}</h2>
-                {data.type == "simple-text" ? (
+                {data.type === "simple-text" ? (
                   <div>{data.answer}</div>
                 ) : (
                   <ol>
                     {data.answer.map((answer) => {
                       return (
-                        <li>
+                        <li key={answer.title.replace(" ", "")}>
                           <h4 className="m-2">{answer.title}</h4>
                           <div>{answer.subtitle}</div>
                         </li>
@@ -310,7 +316,7 @@ function CreateGroup({ info, setPage }) {
                     })}
                   </ol>
                 )}
-              </>
+              </div>
             );
           })}
         </div>

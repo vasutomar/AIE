@@ -8,7 +8,6 @@ import { getUserId } from "../../utils/authentication.util";
 function Discussions() {
   const [data, setData] = useState();
   const appUrl = getAppUrl();
-  const username = localStorage.getItem("username");
   const headers = {};
   headers.Authorization = localStorage.getItem("token");
 
@@ -115,7 +114,7 @@ function Discussions() {
         {data &&
           data.map((cardData) => {
             return (
-              <>
+              <div key={cardData.discussion_id}>
                 <Card
                   postId={cardData.discussion_id}
                   title={[
@@ -144,6 +143,7 @@ function Discussions() {
                   {cardData.comments.map((comment) => {
                     return (
                       <div
+                        key={comment.comment.replace(" ", "")}
                         className={`comment color-font-white color-bg-79A3D3`}
                       >
                         {comment.username + " : " + comment.comment}
@@ -170,7 +170,7 @@ function Discussions() {
                     </button>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
       </div>
