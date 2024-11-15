@@ -134,23 +134,9 @@
                         max-width: 80px;
                         max-height: 80px;
                     }
+                }
 
-                    .green-cricle {
-                        border-radius: 50%;
-                        background-color: #68CC58;
-                        width: 10px;
-                        height: 10px;
-                        margin-left: 5px;
-                    }
-                    .red-cricle {
-                        border-radius: 50%;
-                        background-color: #ee4949;
-                        width: 10px;
-                        height: 10px;
-                        margin-left: 5px;
-                    }
-
-                }:hover {
+                .member-status:hover {
                     cursor: pointer;
                     scale: 104%;
                 }

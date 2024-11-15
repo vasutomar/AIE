@@ -3,14 +3,19 @@ import "./YourGroups.scss";
 import { getGroupImg, getGroupName } from "../../../utils/group.util";
 
 function YourGroups({ groups, setPage }) {
+
+  function startGroupCall() {
+    setPage('group-call');
+  }
+
   return (
     <div className="yourgroup-layout display-column align-items-center">
-      <h1 className="underline">YOUR GROUPS</h1>
-      {groups.map((group) => {
+      <h1 className="font-36 font-weight-400 underline">YOUR GROUPS</h1>
+      {groups.map((group, index) => {
         return (
-          <div className="group-display-card flex-row">
+          <div className="group-display-card flex-row" onClick={() => startGroupCall()}>
             <div className="nmt-section flex-column">
-              <h3 className="underline">{group.name}</h3>
+              <h3 className="font-20 font-weight-400">{index+1}. {group.name}</h3>
               <div className="members">
                 {group.members.map((member) => {
                   return <img src={member.img} />;
@@ -18,11 +23,11 @@ function YourGroups({ groups, setPage }) {
               </div>
               <div className="type flex-row">
                 <img src={getGroupImg(group.type)} />
-                <label>{getGroupName(group.type)} Group</label>
+                <label className="font-20 font-weight-400 underline">{getGroupName(group.type)} Group</label>
               </div>
             </div>
             <div className="about-section flex-column">
-              <h3 className="underline">About</h3>
+              <h3 className="font-20 font-weight-400 underline">About</h3>
               <p>{group.about}</p>
             </div>
           </div>

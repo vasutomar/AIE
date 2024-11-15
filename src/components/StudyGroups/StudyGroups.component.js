@@ -12,7 +12,9 @@ import text from "../../assets/images/text.png";
 import video from "../../assets/images/audio.png";
 import events from "../../assets/images/video.png";
 import audio from "../../assets/images/events.png";
+
 import YourGroups from "./YourGoups/YourGroups.component";
+import GroupCall from "./GroupCall/GroupCall.component";
 
 function StudyGroups() {
   const [page, setPage] = useState("your-groups");
@@ -127,6 +129,11 @@ function StudyGroups() {
             setPage={setPage}
             cardData={cardData}
           />
+        );
+      }
+      case "group-call": {
+        return (
+          <GroupCall type={groupToCreate}/>
         );
       }
     }

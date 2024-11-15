@@ -8,6 +8,21 @@ const groupMapping = {
     'VIDEO': video
 }
 
+const iconMapping = {
+    'TEXT': [
+        'remove'
+    ],
+    'AUDIO': [
+        'mute',
+        'remove'
+    ],
+    'VIDEO': [
+        'mute',
+        'camera-toggle',
+        'remove'
+    ]
+}
+
 export function getGroupImg(type) {
     return groupMapping[type];
 }
@@ -18,4 +33,8 @@ export function getGroupName(type) {
         case 'AUDIO': return 'Audio';
         case 'VIDEO': return 'Video';
     }
+}
+
+export function getIcons(type) {
+    return iconMapping[type];
 }

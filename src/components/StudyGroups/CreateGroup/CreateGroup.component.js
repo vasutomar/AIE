@@ -272,12 +272,12 @@ function CreateGroup({ info, setPage }) {
                     {member.isOnline ? (
                       <div className="flex-row align-items-center">
                         Online
-                        <div className="green-cricle" />
+                        <div className="green-circle" />
                       </div>
                     ) : (
                       <div className="flex-row align-items-center">
                         Offline
-                        <div className="red-cricle" />
+                        <div className="red-circle" />
                       </div>
                     )}
                   </div>
