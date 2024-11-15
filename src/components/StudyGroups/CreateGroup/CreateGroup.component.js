@@ -155,7 +155,7 @@ function CreateGroup({ info, setPage }) {
       };
     });
     const exam = localStorage.getItem("exam");
-    const url = `${getAppUrl()}/group`;
+    const url = `${getAppUrl()}/group/`;
     post(
       url,
       {
@@ -203,7 +203,7 @@ function CreateGroup({ info, setPage }) {
                       onClick={() => {
                         setPeerCount(count);
                       }}
-                      className="number"
+                      className={`number ${peerCount == count ? 'selected-number' : ''}`}
                     >
                       {count}
                     </div>
@@ -221,7 +221,7 @@ function CreateGroup({ info, setPage }) {
                       onClick={() => {
                         setGroupColor(color);
                       }}
-                      className={`color-bg-${color} color`}
+                      className={`color-bg-${color} color ${groupColor == color ? 'selected-color' : ''}`}
                     />
                   );
                 })}

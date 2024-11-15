@@ -45,7 +45,7 @@ function Questions() {
 
     if (questionIndex === questionData.length - 1) {
       localStorage.setItem("isOnboardingComplete", true);
-      window.location.href = "/aie/home";
+      window.location.href = "/aie/discussions";
     } else setQuestionIndex(questionIndex + 1);
   };
 

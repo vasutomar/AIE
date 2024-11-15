@@ -16,16 +16,18 @@ import "./Home.scss";
 import StudyGroups from "../StudyGroups/StudyGroups.component";
 import CreateModal from "../../molecules/CreateModal/CreateModal";
 
-function Home() {
+function Home({ page }) {
   const [currentPage, setCurrentPage] = useState("Discussion zone");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const features = [
     {
       name: "Discussion zone",
+      url: 'discussions',
       logo: discuss,
     },
     {
       name: "Study groups",
+      url: 'groups',
       logo: study,
     },
     {
@@ -78,11 +80,11 @@ function Home() {
   };
 
   const getComponent = () => {
-    switch (currentPage) {
-      case "Discussion zone": {
+    switch (page) {
+      case "discussions": {
         return <Discussions />;
       }
-      case "Study groups": {
+      case "groups": {
         return <StudyGroups />;
       }
       default: {
@@ -90,6 +92,10 @@ function Home() {
       }
     }
   };
+
+  function handleFeatureChange(featurePath) {
+    window.location.href = window.location.origin + '/aie/' + featurePath;
+  }
 
   const handleOnClickPageOption = (option) => {
     switch (option) {
@@ -122,10 +128,10 @@ function Home() {
               <img
                 alt={f.name}
                 key={f.name}
-                className={f.name === currentPage ? "selected" : ""}
+                className={f.url === page ? "selected" : ""}
                 title={f.name}
                 src={f.logo}
-                onClick={() => setCurrentPage(f.name)}
+                onClick={() => handleFeatureChange(f.url)}
               />
             );
           })}

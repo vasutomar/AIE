@@ -12,7 +12,8 @@ function App() {
         <Route path="/landing" element={<Landing/>}/>
         <Route path="/auth" element={<Authentication/>}/>
         <Route path="/questions" element={<Questions />}/>
-        <Route path="/home" element={<Home />}/>
+        <Route path="/discussions" element={<Home page={'discussions'}/>}/>
+        <Route path="/groups" element={<Home page={'groups'}/>}/>
       </Routes>
     </BrowserRouter>
   );
