@@ -18,7 +18,7 @@ function Landing() {
           if (isOnboardingComplete === "false") {
             window.location.href = "/aie/questions";
           }
-          window.location.href = "/aie/home";
+          window.location.href = "/aie/discussions";
         } else {
           window.location.href = "/aie/auth";
         }

@@ -47,72 +47,10 @@ function StudyGroups() {
     },
   ];
 
-  const userGroups = [
-    {
-      name: "Group1",
-      members: [
-        {
-          name: "Amit",
-          img: person1,
-        },
-        {
-          name: "Samuel",
-          img: person2,
-        },
-        {
-          name: "Karan",
-          img: person3,
-        },
-      ],
-      type: "TEXT",
-      about:" Our text-based study group is a collaborative online space where students can discuss, share resources, and support one another through written communication. Whether you're working through challenging assignments, need insights on complex topics, or just want to connect with like-minded peers, this group allows for detailed, thoughtful discussions that are easy to refer back to. Perfect for those who prefer a paced, organized exchange of ideas, our text-based group makes it easy to stay engaged, review key points, and revisit our collective knowledge at any time."
-    },
-    {
-      name: "Group2",
-      members: [
-        {
-          name: "Amit",
-          img: person1,
-        },
-        {
-          name: "Samuel",
-          img: person2,
-        },
-        {
-          name: "Karan",
-          img: person3,
-        },
-      ],
-      type: "VIDEO",
-      about:
-        "Our audio-based study group is a dynamic forum where students can engage in real-time discussions, explanations, and debates using voice chats. With a flexible schedule, this format lets you learn on the go, making it a great choice for auditory learners who absorb information best through listening and speaking. We encourage members to participate in study sessions, topic breakdowns, and Q&A sessions for a more personal and interactive study experience that brings concepts to life and fosters an immediate exchange of knowledge.",
-    },
-    {
-      name: "Group3",
-      members: [
-        {
-          name: "Amit",
-          img: person1,
-        },
-        {
-          name: "Samuel",
-          img: person2,
-        },
-        {
-          name: "Karan",
-          img: person3,
-        },
-      ],
-      type: "AUDIO",
-      about:
-        "Our video-based study group is an interactive space where students connect via video calls for a more visual and engaging study experience. Ideal for collaborative learning, our sessions include presentations, screen sharing, and visual demonstrations, allowing members to work through problems together, study for exams, or conduct in-depth discussions with face-to-face interaction. This format is perfect for learners who benefit from visual cues, real-time engagement, and a shared, immersive study environment. Join us to bring your studies to life with a community that’s as committed to growth and success as you are.",
-    },
-  ];
-
   function getGroupPageToShow() {
     switch (page) {
       case "your-groups": {
-        return <YourGroups groups={userGroups} setPage={setPage} />;
+        return <YourGroups setPage={setPage} />;
       }
       case "create-group": {
         return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CreateGroup.scss";
 
 import person1 from "../../../assets/images/person1.png";
@@ -10,7 +10,7 @@ import person6 from "../../../assets/images/person6.png";
 import person7 from "../../../assets/images/person7.png";
 import person8 from "../../../assets/images/person8.png";
 import VerticalLine from "../../../atoms/VerticalLine/VerticalLine";
-import { getAppUrl, post } from "../../../utils/request.util";
+import { getAppUrl, post, get } from "../../../utils/request.util";
 
 function CreateGroup({ info, setPage }) {
   const { image } = info;
@@ -25,6 +25,12 @@ function CreateGroup({ info, setPage }) {
   const [peerCount, setPeerCount] = useState(1);
   const [groupColor, setGroupColor] = useState(colorOptions[0]);
   const [groupName, setGroupName] = useState("");
+  const [groupAbout, setGroupAbout] = useState("");
+
+  const [addedMembers, setAddedMembers] = useState([]);
+  const [friends, setFriends] = useState([]);
+
+  const [fetchData, setFetchData] = useState(true);
 
   const FAQData = [
     {
@@ -92,54 +98,54 @@ function CreateGroup({ info, setPage }) {
     },
   ];
 
-  const addedMembers = [
-    {
-      name: "Rahul",
-      key: "128fandsu129",
-      img: person1,
-      isOnline: true,
-    },
-    {
-      name: "Samantha",
-      key: "128fandsu139",
-      img: person2,
-      isOnline: false,
-    },
-    {
-      name: "Sam",
-      key: "128fandsu179",
-      img: person3,
-      isOnline: true,
-    },
-    {
-      name: "Sarthak",
-      key: "128fandsu180",
-      img: person8,
-    },
-  ];
+  // const addedMembers = [
+  //   {
+  //     name: "Rahul",
+  //     key: "128fandsu129",
+  //     img: person1,
+  //     isOnline: true,
+  //   },
+  //   {
+  //     name: "Samantha",
+  //     key: "128fandsu139",
+  //     img: person2,
+  //     isOnline: false,
+  //   },
+  //   {
+  //     name: "Sam",
+  //     key: "128fandsu179",
+  //     img: person3,
+  //     isOnline: true,
+  //   },
+  //   {
+  //     name: "Sarthak",
+  //     key: "128fandsu180",
+  //     img: person8,
+  //   },
+  // ];
 
-  const friends = [
-    {
-      name: "Martha",
-      key: "128fandsu129",
-      img: person4,
-    },
-    {
-      name: "Adam",
-      key: "128fandsu139",
-      img: person5,
-    },
-    {
-      name: "Eve",
-      key: "128fandsu179",
-      img: person6,
-    },
-    {
-      name: "Sarthak",
-      key: "128fandsu180",
-      img: person7,
-    },
-  ];
+  // const friends = [
+  //   {
+  //     name: "Martha",
+  //     key: "128fandsu129",
+  //     img: person4,
+  //   },
+  //   {
+  //     name: "Adam",
+  //     key: "128fandsu139",
+  //     img: person5,
+  //   },
+  //   {
+  //     name: "Eve",
+  //     key: "128fandsu179",
+  //     img: person6,
+  //   },
+  //   {
+  //     name: "Sarthak",
+  //     key: "128fandsu180",
+  //     img: person7,
+  //   },
+  // ];
 
   const memberOptions = [1, 2, 3, 4, 5, 6];
 
@@ -165,6 +171,7 @@ function CreateGroup({ info, setPage }) {
         members: members,
         exam: exam,
         group_type: info.title,
+        about: groupAbout
       },
       {
         Authorization: localStorage.getItem("token"),
@@ -178,6 +185,42 @@ function CreateGroup({ info, setPage }) {
     );
   };
 
+  function getFriends() {
+    get(
+      `${getAppUrl()}/profile/friends`,
+      {
+        Authorization: localStorage.getItem("token"),
+      },
+      (response) => {
+        setFriends(response.data.data);
+      },
+      (error) => {
+        console.log('error', error);
+      }
+    );
+  }
+
+  function addMember(index) {
+    const user = friends[index];
+    let updatedFriends = [...friends];
+    updatedFriends.splice(index,1);
+    setFriends(updatedFriends);
+    let updatedMembers = addedMembers;
+    updatedMembers.push(user);
+    setAddedMembers(updatedMembers);
+  }
+
+  useEffect(() => {
+
+  }, [friends]);
+
+  useEffect(() => {
+    if (fetchData) {
+      getFriends();
+      setFetchData(false);
+    }
+  }, []);
+
   return (
     <div className="creategroup-layout">
       <div className="main-section">
@@ -189,6 +232,15 @@ function CreateGroup({ info, setPage }) {
               <input
                 onChange={(e) => {
                   setGroupName(e.target.value);
+                }}
+                className="nameInput"
+              ></input>
+            </div>
+            <div className="flex-row detail">
+              <label>About</label>
+              <input
+                onChange={(e) => {
+                  setGroupAbout(e.target.value);
                 }}
                 className="nameInput"
               ></input>
@@ -250,10 +302,10 @@ function CreateGroup({ info, setPage }) {
             <div className="friends-box">
               <h2 className="underline">PICK FROM FRIENDS</h2>
               <div className="friends">
-                {friends.map((friend) => {
+                {friends.map((friend, index) => {
                   return (
-                    <div key={friend.key} className="flex-row friend-holder">
-                      <img alt={'friend-logo'} src={friend.img} />
+                    <div key={friend.user_id} className="flex-row friend-holder" onClick={() => addMember(index)}>
+                      <img alt={'friend-logo'} src={friend.profile_pic} />
                       <div>{friend.name}</div>
                     </div>
                   );
@@ -265,8 +317,8 @@ function CreateGroup({ info, setPage }) {
             <h2 className="underline">MEMBER LIST</h2>
             {addedMembers.map((member) => {
               return (
-                <div key={member.key} className="member-status">
-                  <img alt={'added-member-logo'} src={member.img} />
+                <div key={member.user_id} className="member-status">
+                  <img alt={'added-member-logo'} src={member.profile_pic} />
                   <div className="flex-column">
                     <div>{member.name}</div>
                     {member.isOnline ? (

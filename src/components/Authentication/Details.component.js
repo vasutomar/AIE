@@ -36,7 +36,7 @@ function Details({ authenticationDetails, setPage, page }) {
           localStorage.setItem("username", payload["username"]);
           if (exam) {
             localStorage.setItem("exam", exam);
-            window.location.href = "/aie/home";
+            window.location.href = "/aie/discussions";
           } else {
             window.location.href = "/aie/questions";
           }

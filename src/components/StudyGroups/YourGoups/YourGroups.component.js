@@ -1,8 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./YourGroups.scss";
+import { get, getAppUrl } from "../../../utils/request.util";
 import { getGroupImg, getGroupName } from "../../../utils/group.util";
 
-function YourGroups({ groups, setPage }) {
+function YourGroups({ setPage }) {
+
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    get(
+      `${getAppUrl()}/group/`,
+      {
+        Authorization: localStorage.getItem("token"),
+      },
+      (response) => {
+        setGroups(response.data.data);
+      },
+      (error) => {
+        console.log('error', error);
+      }
+    );
+  }, []);
 
   function startGroupCall() {
     setPage('group-call');

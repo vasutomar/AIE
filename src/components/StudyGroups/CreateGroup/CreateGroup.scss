@@ -103,7 +103,9 @@
                             cursor: pointer;
                             display: flex;
                             align-items: center;
-                        }:hover {
+                        }
+
+                        .friend-holder:hover {
                             scale: 104%;
                         }
 
