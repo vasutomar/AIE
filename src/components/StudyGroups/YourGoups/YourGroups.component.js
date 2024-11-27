@@ -14,6 +14,10 @@ function YourGroups({ setPage }) {
         Authorization: localStorage.getItem("token"),
       },
       (response) => {
+        const fetchedGroups = response.data.data;
+        if (!fetchedGroups.length) {
+          setPage('select-group');
+        }
         setGroups(response.data.data);
       },
       (error) => {

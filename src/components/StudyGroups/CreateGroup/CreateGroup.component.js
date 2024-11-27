@@ -9,8 +9,12 @@ import person5 from "../../../assets/images/person5.png";
 import person6 from "../../../assets/images/person6.png";
 import person7 from "../../../assets/images/person7.png";
 import person8 from "../../../assets/images/person8.png";
+
+import group from "../../../assets/images/group.png";
+
 import VerticalLine from "../../../atoms/VerticalLine/VerticalLine";
 import { getAppUrl, post, get } from "../../../utils/request.util";
+import Searchbox from "../../../atoms/Searchbox/Searchbox";
 
 function CreateGroup({ info, setPage }) {
   const { image } = info;
@@ -31,121 +35,34 @@ function CreateGroup({ info, setPage }) {
   const [friends, setFriends] = useState([]);
 
   const [fetchData, setFetchData] = useState(true);
-
-  const FAQData = [
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [globalData, setGlobalData] = useState([]);
+  const [searchResult, setSearchResult] = useState([
     {
-      key: "what-all-can-i-do",
-      question: "What all can I do?",
-      answer: [
-        {
-          title: "Collaborative problem solving",
-          subtitle:
-            "Share different approaches and solutions to the same issue for a broader understanding.",
-        },
-        {
-          title: "Sharing resources",
-          subtitle:
-            "Exchange study materials like notes, articles, books, and links to helpful videos or academic papers.",
-        },
-        {
-          title: "General Discussions",
-          subtitle:
-            "Discuss recent news or trends related to your field of study for practical insights.",
-        },
-        {
-          title: "Accountability tool",
-          subtitle:
-            "Set goals for each member and check in regularly to ensure progress is being made.",
-        },
-        {
-          title: "Q&A Session",
-          subtitle:
-            "Hold timed Q&A rounds for quick clarifications on study material.",
-        },
-        {
-          title: "Peer Teaching",
-          subtitle:
-            "Take turns explaining topics to the group, as teaching others helps reinforce your own understanding.",
-        },
-        {
-          title: "Study tips and Strategy",
-          subtitle: "Share personal study techniques and productivity hacks.",
-        },
-      ],
-      type: "list-with-subtitle",
+      name: "Cathy",
+      user_id: "128fandsu129",
+      profile_pic:
+        "https://images.unsplash.com/photo-1660951381925-57ac7e40c40d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-      key: "how-many-can-i-add",
-      question: "How many members can I add?",
-      answer:
-        "Regular users can add upto 4 memebers.Star members can add upto 6 members",
-      type: "simple-text",
-    },
-  ];
-
-  const searchResult = [
-    {
-      name: "Rahul",
-      key: "128fandsu129",
+      name: "Adam",
+      user_id: "128fandsu129",
+      profile_pic:
+        "https://images.unsplash.com/photo-1668092833465-457973cc21ac?q=80&w=2088&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-      name: "Samantha",
-      key: "128fandsu139",
+      name: "Karan",
+      user_id: "128fandsu129",
+      profile_pic:
+        "https://images.unsplash.com/photo-1581019685017-5129b8105e37?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-      name: "Sam",
-      key: "128fandsu179",
+      name: "Stacy",
+      user_id: "128fandsu129",
+      profile_pic:
+        "https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
-  ];
-
-  // const addedMembers = [
-  //   {
-  //     name: "Rahul",
-  //     key: "128fandsu129",
-  //     img: person1,
-  //     isOnline: true,
-  //   },
-  //   {
-  //     name: "Samantha",
-  //     key: "128fandsu139",
-  //     img: person2,
-  //     isOnline: false,
-  //   },
-  //   {
-  //     name: "Sam",
-  //     key: "128fandsu179",
-  //     img: person3,
-  //     isOnline: true,
-  //   },
-  //   {
-  //     name: "Sarthak",
-  //     key: "128fandsu180",
-  //     img: person8,
-  //   },
-  // ];
-
-  // const friends = [
-  //   {
-  //     name: "Martha",
-  //     key: "128fandsu129",
-  //     img: person4,
-  //   },
-  //   {
-  //     name: "Adam",
-  //     key: "128fandsu139",
-  //     img: person5,
-  //   },
-  //   {
-  //     name: "Eve",
-  //     key: "128fandsu179",
-  //     img: person6,
-  //   },
-  //   {
-  //     name: "Sarthak",
-  //     key: "128fandsu180",
-  //     img: person7,
-  //   },
-  // ];
+  ]);
 
   const memberOptions = [1, 2, 3, 4, 5, 6];
 
@@ -171,7 +88,7 @@ function CreateGroup({ info, setPage }) {
         members: members,
         exam: exam,
         group_type: info.title,
-        about: groupAbout
+        about: groupAbout,
       },
       {
         Authorization: localStorage.getItem("token"),
@@ -195,27 +112,57 @@ function CreateGroup({ info, setPage }) {
         setFriends(response.data.data);
       },
       (error) => {
-        console.log('error', error);
+        console.log("error", error);
       }
     );
   }
 
-  function addMember(index) {
-    const user = friends[index];
-    let updatedFriends = [...friends];
-    updatedFriends.splice(index,1);
-    setFriends(updatedFriends);
+  function addMember(userId, type) {
+    const dataSet = type == "friends" ? friends : searchResult;
+    const updateFunc = type === "friends" ? setFriends : setSearchResult;
+    let updatedSet = [...dataSet];
+
+    const index = dataSet.findIndex((e) => e.user_id === userId);
+    const deletedReference = updatedSet.splice(index, 1);
+    updateFunc(updatedSet);
+
     let updatedMembers = addedMembers;
-    updatedMembers.push(user);
+    updatedMembers.push(deletedReference[0]);
     setAddedMembers(updatedMembers);
   }
 
-  useEffect(() => {
+  function handleUserFilterInput(inputValue) {
+    if (inputValue === "") {
+      setFilteredResults([]);
+    } else {
+      let results = [...searchResult];
+      results = results.filter((user) => {
+        return user.name.toLowerCase().includes(inputValue.toLowerCase());
+      });
+      setFilteredResults(results);
+    }
+  }
 
-  }, [friends]);
+  function setGlobalSearchData() {
+    get(
+      `${getAppUrl()}/profile/all/${localStorage.getItem("exam")}`,
+      {
+        Authorization: localStorage.getItem("token"),
+      },
+      function (response) {
+        setGlobalData(response.data.data);
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
+
+  useEffect(() => {}, [friends, searchResult, globalData]);
 
   useEffect(() => {
     if (fetchData) {
+      setGlobalSearchData();
       getFriends();
       setFetchData(false);
     }
@@ -224,118 +171,49 @@ function CreateGroup({ info, setPage }) {
   return (
     <div className="creategroup-layout">
       <div className="main-section">
-        <div className="details-section">
-          <div className="details-card">
-            <h2 className="underline">ENTER GROUP DETAILS</h2>
-            <div className="flex-row detail">
-              <label>Name</label>
-              <input
-                onChange={(e) => {
-                  setGroupName(e.target.value);
-                }}
-                className="nameInput"
-              ></input>
-            </div>
-            <div className="flex-row detail">
-              <label>About</label>
-              <input
-                onChange={(e) => {
-                  setGroupAbout(e.target.value);
-                }}
-                className="nameInput"
-              ></input>
-            </div>
-            <div className="flex-row detail">
-              <label>Peer Count</label>
-              <div className="flex-row member-count-holder">
-                {memberOptions.map((count) => {
-                  return (
-                    <div
-                      key={`key-member-${count}`}
-                      onClick={() => {
-                        setPeerCount(count);
-                      }}
-                      className={`number ${peerCount == count ? 'selected-number' : ''}`}
-                    >
-                      {count}
-                    </div>
-                  );
-                })}
+        <div className="details-section flex-row">
+          <img src={group} />
+          <div className="name-color-about flex-column">
+            <div className="name-color flex-row">
+              <input placeholder="Name" />
+              <div className="color-picker-holder">
+                <label>Color</label>
+                <div className="bg-color-black" />
               </div>
             </div>
-            <div className="flex-row detail">
-              <label>Color</label>
-              <div className="flex-row member-count-holder">
-                {colorOptions.map((color) => {
-                  return (
-                    <div
-                    key={`key-color-${color}`}
-                      onClick={() => {
-                        setGroupColor(color);
-                      }}
-                      className={`color-bg-${color} color ${groupColor == color ? 'selected-color' : ''}`}
-                    />
-                  );
-                })}
-              </div>
-            </div>
+            <textarea
+              className="inp"
+              placeholder="About..."
+              id="create-post-body"
+            />
           </div>
-          <img alt={'group-type-image'} src={image} />
         </div>
         <div className="members-section">
-          <div className="add-section">
-            <div className="add-box">
-              <h2 className="underline">ADD MEMBERS</h2>
-              <select id={"memberSearch"}>
-                <option value="" disabled selected>
-                  Select your option
-                </option>
-                {searchResult.map((option) => {
-                  return (
-                    <option key={option.key} value={option.name}>
-                      {option.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="friends-box">
-              <h2 className="underline">PICK FROM FRIENDS</h2>
-              <div className="friends">
-                {friends.map((friend, index) => {
-                  return (
-                    <div key={friend.user_id} className="flex-row friend-holder" onClick={() => addMember(index)}>
-                      <img alt={'friend-logo'} src={friend.profile_pic} />
-                      <div>{friend.name}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
           <div className="list-section">
             <h2 className="underline">MEMBER LIST</h2>
-            {addedMembers.map((member) => {
-              return (
-                <div key={member.user_id} className="member-status">
-                  <img alt={'added-member-logo'} src={member.profile_pic} />
-                  <div className="flex-column">
-                    <div>{member.name}</div>
-                    {member.isOnline ? (
-                      <div className="flex-row align-items-center">
-                        Online
-                        <div className="green-circle" />
-                      </div>
-                    ) : (
-                      <div className="flex-row align-items-center">
-                        Offline
-                        <div className="red-circle" />
-                      </div>
-                    )}
+            <div className="member-grid">
+              {addedMembers.map((member) => {
+                return (
+                  <div key={member.user_id} className="member-status">
+                    <img alt={"added-member-logo"} src={member.profile_pic} />
+                    <div className="flex-column">
+                      <div>{member.name}</div>
+                      {member.isOnline ? (
+                        <div className="flex-row align-items-center">
+                          Online
+                          <div className="green-circle" />
+                        </div>
+                      ) : (
+                        <div className="flex-row align-items-center">
+                          Offline
+                          <div className="red-circle" />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="action-section">
@@ -345,32 +223,28 @@ function CreateGroup({ info, setPage }) {
       </div>
       <VerticalLine height={"page"} />
       <div className="faq-section">
-        <div className="headings">
-          <h1 className="m-2 underline">{info.title} GROUP</h1>
-          <h3 className="color-font-707070 m-2">FAQ</h3>
-        </div>
-        <div className="questions">
-          {FAQData.map((data) => {
-            return (
-              <div key={data.key}>
-                <h2 className="underline">{data.question}</h2>
-                {data.type === "simple-text" ? (
-                  <div>{data.answer}</div>
-                ) : (
-                  <ol>
-                    {data.answer.map((answer) => {
-                      return (
-                        <li key={answer.title.replace(" ", "")}>
-                          <h4 className="m-2">{answer.title}</h4>
-                          <div>{answer.subtitle}</div>
-                        </li>
-                      );
-                    })}
-                  </ol>
-                )}
-              </div>
-            );
-          })}
+        <div className="add-section">
+          <div className="add-box">
+            <h2 className="underline">ADD MEMBERS</h2>
+            {globalData.length ? <Searchbox globalData={globalData} fetchFunction={setGlobalSearchData} /> : <></>}
+          </div>
+          <div className="friends-box flex-column">
+            <h2 className="underline">PICK FROM FRIENDS</h2>
+            <div className="friends">
+              {friends.map((friend, index) => {
+                return (
+                  <div
+                    key={friend.user_id}
+                    className="flex-row friend-holder"
+                    onClick={() => addMember(friend.user_id, "friends")}
+                  >
+                    <img alt={"friend-logo"} src={friend.profile_pic} />
+                    <div>{friend.name}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -2,25 +2,33 @@ import React from "react";
 import { useEffect } from "react";
 import logo from "../../assets/images/logo.png";
 import "./Landing.scss";
-import { get, getAppUrl } from "../../utils/request.util";
+import { get, post, getAppUrl } from "../../utils/request.util";
 
 function Landing() {
   useEffect(() => {
-    get(
-      `${getAppUrl()}/authentication/health`,
+    post(
+      `${getAppUrl()}/authentication/verify`,
+      {
+        token: localStorage.getItem("token").split(" ")[1]
+      },
       null,
       (response) => {
-        const storedToken = localStorage.getItem("token");
-        if (storedToken) {
-          const isOnboardingComplete = localStorage.getItem(
-            "isOnboardingComplete"
-          );
-          if (isOnboardingComplete === "false") {
-            window.location.href = "/aie/questions";
-          }
-          window.location.href = "/aie/discussions";
-        } else {
+        if (response.data.message === "Invalid session") {
+          localStorage.clear();
           window.location.href = "/aie/auth";
+        } else {
+          const storedToken = localStorage.getItem("token");
+          if (storedToken) {
+            const isOnboardingComplete = localStorage.getItem(
+              "isOnboardingComplete"
+            );
+            if (isOnboardingComplete === "false") {
+              window.location.href = "/aie/questions";
+            }
+            window.location.href = "/aie/discussions";
+          } else {
+            window.location.href = "/aie/auth";
+          }
         }
       },
       (error) => {

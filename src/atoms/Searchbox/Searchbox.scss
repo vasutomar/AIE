@@ -1,0 +1,30 @@
+.searchbox {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  input {
+    height: 1rem;
+    background-color: #2d2d34;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+
+  .suggestions {
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+
+    .suggestion {
+      background-color: rgba(45, 45, 52, 0.4);
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      padding: 1rem;
+      margin: 2px 0;
+      cursor: pointer;
+    }
+  }
+}
