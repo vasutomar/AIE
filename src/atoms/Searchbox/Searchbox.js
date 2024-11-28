@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Searchbox.scss";
 import { getAppUrl, post, get } from "../../utils/request.util";
 
-function Searchbox({ globalData, matchUrl, fetchFunction }) {
+function Searchbox({ globalData, matchUrl, onClickEvent, fetchFunction }) {
   const [data, setData] = useState([...globalData]);
   const [search, setSearch] = useState("");
   function fetchData() {
@@ -44,7 +44,7 @@ function Searchbox({ globalData, matchUrl, fetchFunction }) {
       <div className="suggestions">
         {search.length ? (
           data.map((d) => {
-            return <div className="suggestion">{d.name}</div>;
+            return <div className="suggestion" onClick={() => onClickEvent(d.user_id)}>{d.name}</div>;
           })
         ) : (
           <></>

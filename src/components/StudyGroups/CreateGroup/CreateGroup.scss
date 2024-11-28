@@ -26,17 +26,12 @@
       .name-color-about {
         flex-grow: 1;
 
-        .name-color {
-          width: 100%;
-          justify-content: space-between;
+        input {
+          border: none;
+          outline: none;
+          color: black;
+          text-decoration: underline;
           font-size: 20px;
-          input {
-            border: none;
-            outline: none;
-            color: black;
-            text-decoration: underline;
-            font-size: 20px;
-          }
         }
 
         textarea {
