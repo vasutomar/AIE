@@ -4,10 +4,6 @@ import "./StudyGroups.scss";
 import GroupLanding from "./GroupLanding/GroupLanding.component";
 import CreateGroup from "./CreateGroup/CreateGroup.component";
 
-import person1 from "../../assets/images/person1.png";
-import person2 from "../../assets/images/person2.png";
-import person3 from "../../assets/images/person3.png";
-
 import text from "../../assets/images/text.png";
 import video from "../../assets/images/audio.png";
 import events from "../../assets/images/video.png";
@@ -16,10 +12,11 @@ import audio from "../../assets/images/events.png";
 import YourGroups from "./YourGoups/YourGroups.component";
 import GroupCall from "./GroupCall/GroupCall.component";
 
-function StudyGroups() {
-  const [page, setPage] = useState("your-groups");
+function StudyGroups({
+  pageToRender
+}) {
+  const [page, setPage] = useState(pageToRender);
   const [groupToCreate, setGroupToCreate] = useState("TEXT");
-  const [showCreateScreen, setShowCreateScreen] = useState(false);
   const cardData = [
     {
       title: "TEXT",

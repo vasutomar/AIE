@@ -1,0 +1,14 @@
+.construction-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-family: Kulim Park;
+    font-size: 24px;
+
+    img {
+        scale: 100%;
+    }
+}

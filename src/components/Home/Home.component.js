@@ -15,8 +15,9 @@ import cloud from "../../assets/images/wb_cloudy.png";
 import "./Home.scss";
 import StudyGroups from "../StudyGroups/StudyGroups.component";
 import CreateModal from "../../molecules/CreateModal/CreateModal";
+import Construction from "../Construction/Construction.component";
 
-function Home({ page }) {
+function Home({ page, subPage }) {
   const [currentPage, setCurrentPage] = useState("Discussion zone");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const features = [
@@ -33,10 +34,12 @@ function Home({ page }) {
     {
       name: "Practice",
       logo: test,
+      url: 'construction/practice'
     },
     {
       name: "News",
       logo: news,
+      url: 'construction/news'
     },
   ];
 
@@ -85,7 +88,10 @@ function Home({ page }) {
         return <Discussions />;
       }
       case "groups": {
-        return <StudyGroups />;
+        return <StudyGroups pageToRender={subPage}/>;
+      }
+      case "construction": {
+        return <Construction />
       }
       default: {
         return <></>;

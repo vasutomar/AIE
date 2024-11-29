@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./YourGroups.scss";
 import { get, getAppUrl } from "../../../utils/request.util";
 import { getGroupImg, getGroupName } from "../../../utils/group.util";
+import groupImg from "../../../assets/images/group.png";
 
-function YourGroups({ setPage }) {
+function YourGroups() {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ function YourGroups({ setPage }) {
       (response) => {
         const fetchedGroups = response.data.data;
         if (!fetchedGroups.length) {
-          setPage("select-group");
+          window.location.href = "groups/select";
         }
         setGroups(response.data.data);
       },
@@ -26,12 +27,13 @@ function YourGroups({ setPage }) {
   }, []);
 
   function startGroupCall() {
-    setPage("group-call");
+    window.location.href = "groups/session";
   }
 
   return (
     <div className="yourgroup-layout display-column align-items-center">
       <h1 className="font-36 font-weight-400 underline">YOUR GROUPS</h1>
+      <div className="group-cards">
       {groups.map((group, index) => {
         return (
           <div
@@ -40,22 +42,25 @@ function YourGroups({ setPage }) {
           >
             <div className="nmt-section flex-column">
               <div className="flex-row">
-              {index + 1}. 
-                <img src={group.group_pic} />
-                <h3 className="font-20 font-weight-400">
-                  {group.name}
-                </h3>
+                <img
+                  src={group.group_pic.length ? group.group_pic : groupImg}
+                />
+                <div>
+                  <h3 className="font-20 font-weight-400 underline">
+                     {group.name}
+                  </h3>
+                  <div className="type flex-row">
+                    <img src={getGroupImg(group.group_type)} />
+                    <label className="font-weight-400">
+                      {getGroupName(group.group_type)} Group
+                    </label>
+                  </div>
+                </div>
               </div>
               <div className="members m-8">
                 {group.members.map((member) => {
                   return <img src={member.profile_pic} />;
                 })}
-              </div>
-              <div className="type flex-row">
-                <img src={getGroupImg(group.group_type)} />
-                <label className="font-20 font-weight-400 underline">
-                  {getGroupName(group.group_type)} Group
-                </label>
               </div>
             </div>
             <div className="about-section flex-column">
@@ -65,8 +70,11 @@ function YourGroups({ setPage }) {
           </div>
         );
       })}
+      </div>
       <div className="button-group">
-        <button onClick={() => setPage("select-group")}>Create Group</button>
+        <button onClick={() => (window.location.href = "groups/select")}>
+          Create Group
+        </button>
       </div>
     </div>
   );

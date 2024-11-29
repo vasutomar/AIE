@@ -3,53 +3,62 @@
     margin-left: 1rem;
     width: 100%;
     margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
 
-    .group-display-card {
-        background-color: #F1E4E8;
-        border-radius: 10px;
-        margin: 1rem;
-
-        .nmt-section {
-            margin-left: 1rem;
-            flex: 1;
-
-            img {
-                width: 70px;
-                height: 70px;
-            }
-
-            .members {
-                margin-bottom: 0.5rem;
+    .group-cards {
+        flex-grow: 1;
+        overflow-y: auto;
+        .group-display-card {
+            background-color: #F1E4E8;
+            border-radius: 10px;
+            margin: 1rem;
+    
+            .nmt-section {
+                margin-left: 1rem;
+                margin-top: 1rem;
+                flex: 1;
+    
                 img {
-                    border-radius: 50%;
-                    width: 40px;
-                    height: 40px;
-                    margin: 0 0.5rem;
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 10px;
+                    margin-right: 1rem;
+                }
+    
+                .members {
+                    margin: 1rem 0;
+                    img {
+                        border-radius: 50%;
+                        width: 50px;
+                        height: 50px;
+                        margin: 0 0.5rem;
+                    }
+                }
+    
+                .type {
+                    font-size: 18px;
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
                 }
             }
-
-            .type {
-                margin: 1rem 0;
-                img {
-                    margin-right: 0.5rem;
-                    width: 24px;
-                    height: 24px;
-                }
+    
+            .about-section {
+                flex: 2;
+                margin-right: 1rem;
             }
         }
-
-        .about-section {
-            flex: 2;
-            margin-right: 1rem;
+    
+        .group-display-card:hover {
+            -webkit-box-shadow:0px 0px 21px 7px rgba(62,46,79,0.43);
+            -moz-box-shadow: 0px 0px 21px 7px rgba(62,46,79,0.43);
+            box-shadow: 0px 0px 21px 7px rgba(62,46,79,0.43);
+            cursor: pointer;
         }
     }
-
-    .group-display-card:hover {
-        -webkit-box-shadow:0px 0px 21px 7px rgba(62,46,79,0.43);
-        -moz-box-shadow: 0px 0px 21px 7px rgba(62,46,79,0.43);
-        box-shadow: 0px 0px 21px 7px rgba(62,46,79,0.43);
-        cursor: pointer;
-    }
+    
 
     .button-group {
         display: flex;
