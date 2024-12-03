@@ -18,7 +18,7 @@ function MemberTabView({ groupType, members }) {
       <div className="members-list flex-column">
         {members.map((member) => {
           return (
-            <div className="flex-row m-8">
+            <div className="flex-row m-8" key={member.name}>
               <img className="profile-pic" src={member.img} alt={member.name + "_icon"} />
               <div className="flex-column">
                 <div>{member.name}</div>
@@ -36,7 +36,7 @@ function MemberTabView({ groupType, members }) {
               </div>
               <div className="flex-row member-action-items">
                 {getIcons(groupType).map((icon) => {
-                  return <img alt={`action-icon-${icon}`} src={icons[icon]} />;
+                  return <img key={icon} alt={`action-icon-${icon}`} src={icons[icon]} />;
                 })}
               </div>
             </div>

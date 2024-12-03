@@ -26,8 +26,8 @@ function YourGroups() {
     );
   }, []);
 
-  function startGroupCall() {
-    window.location.href = "groups/session";
+  function startGroupCall(group_id) {
+    window.location.href = `groups/session/${group_id}`;
   }
 
   return (
@@ -37,8 +37,9 @@ function YourGroups() {
       {groups.map((group, index) => {
         return (
           <div
+            key={group.group_id}
             className="group-display-card flex-row"
-            onClick={() => startGroupCall()}
+            onClick={() => startGroupCall(group.group_id)}
           >
             <div className="nmt-section flex-column">
               <div className="flex-row">
@@ -59,7 +60,7 @@ function YourGroups() {
               </div>
               <div className="members m-8">
                 {group.members.map((member) => {
-                  return <img src={member.profile_pic} />;
+                  return <img  key={member.name} src={member.profile_pic} />;
                 })}
               </div>
             </div>

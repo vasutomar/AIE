@@ -66,7 +66,8 @@ function CreateGroup({ info, setPage }) {
       },
       (response) => {
         if (response.data.statusCode === 200) {
-          window.location.href = "session";
+          const { group_id } = response.data.data;
+          window.location.href = `session/${group_id}`;
         }
       },
       (error) => {

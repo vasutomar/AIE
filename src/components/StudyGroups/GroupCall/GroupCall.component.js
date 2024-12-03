@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import person1 from "../../../assets/images/person1.png";
 import person2 from "../../../assets/images/person2.png";
 import person3 from "../../../assets/images/person3.png";
@@ -17,7 +17,8 @@ import "./GroupCall.scss";
 
 function GroupCall({ type }) {
   const [currentTabView, setCurrentTabView] = useState("members");
-
+  const { groupId } = useParams();
+  let socket;
   const tabs = [
     {
       img: memberIcon,
@@ -51,30 +52,50 @@ function GroupCall({ type }) {
     },
   ];
 
-  const chats = [{
-    name: 'Vasu',
-    comment: 'Comment 1'
-  }];
-
-  const documents = [{
-    name: 'pdf1',
-    source: 'google.com'
-  }];
+  const documents = [
+    {
+      name: "pdf1",
+      source: "google.com",
+    },
+  ];
 
   function getTabView() {
+    // This is not good because on tab change this page reloads and the value of socket goes away
+    establishConnection();
     switch (currentTabView) {
       case "members":
         return <MemberTabView groupType={type} members={members} />;
       case "chat":
-        return <ChatTabView chats={chats}/>;
+        return <ChatTabView socket={socket} establishConnection={establishConnection} />;
       case "documents":
-        return <DocumentTabView documents={documents}/>;
+        return <DocumentTabView documents={documents} />;
     }
   }
 
   function switchTab(tab) {
     setCurrentTabView(tab);
   }
+
+  function establishConnection() {
+    const token = localStorage.getItem('token').split(' ')[1];
+    socket = new WebSocket(`ws://localhost:3003/${groupId}`, token);
+
+    socket.onopen = () => {
+      console.log("Connected to WebSocket server");
+    };
+
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    socket.onclose = () => {
+      console.log("Disconnected from WebSocket server");
+    };
+  }
+
+  useEffect(() => {
+    establishConnection();
+  }, []);
 
   return (
     <div className="groupcall-layout">
@@ -87,6 +108,7 @@ function GroupCall({ type }) {
           {tabs.map((tabData) => {
             return (
               <div
+                key={tabData.tab}
                 className={`action-icon-holder ${
                   tabData.tab === currentTabView ? "active" : ""
                 }`}
