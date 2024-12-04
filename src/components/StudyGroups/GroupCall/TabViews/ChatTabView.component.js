@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 
-function ChatTabView({ socket, establishConnection }) {
-  
-  const [chats, setChats] = useState([]);
-  const [message, setMessage] = useState('');
+function ChatTabView({ socket }) {
+  console.log('chattabview : ', socket);
   function sendMessage() {
-    socket.send(message);
-    setMessage('');
+    socket.send(document.getElementById('create-post-body').value);
   }
 
   function updateChats(msg) {
-    const chatsCopy = [...chats];
-    chatsCopy.push(msg);
-    setChats(chatsCopy);
+    const chatsElement = document.getElementById('chats');
+
+    const chatHolder = document.createElement('div');
+    chatHolder.classList.add('user-and-comment');
+    chatHolder.classList.add('flex-row');
+
+    const chat = document.createElement('div');
+    chat.classList.add('name');
+    chat.innerHTML = msg;
+
+    chatHolder.appendChild(chat);
+    chatsElement.appendChild(chatHolder);
   }
 
   function addSocketSendEvent() {
@@ -23,26 +29,18 @@ function ChatTabView({ socket, establishConnection }) {
   }
 
   useEffect(() => {
-    if (!socket) establishConnection();
-    else addSocketSendEvent();
-  }, [])
+    addSocketSendEvent();
+  }, []);
 
   return (
     <div className="chat-tab-view">
-      <div className="chats">
-        {chats.map((chat) => {
-          return (
-            <div className="user-and-comment flex-row">
-              <div className="name">{chat}</div>
-            </div>
-          );
-        })}
+      <div id="chats" className="chats">
+        
       </div>
       <textarea
         className="inp"
         placeholder="Content..."
         id="create-post-body"
-        onInput={(e) => setMessage(e.target.value)}
       />
       <button onClick={() => sendMessage()}>Send Chat</button>
     </div>
