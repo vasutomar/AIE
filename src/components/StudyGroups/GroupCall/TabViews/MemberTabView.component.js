@@ -19,7 +19,7 @@ function MemberTabView({ groupType, members }) {
         {members.map((member) => {
           return (
             <div className="flex-row m-8" key={member.name}>
-              <img className="profile-pic" src={member.img} alt={member.name + "_icon"} />
+              <img className="profile-pic" src={member.profile_pic} alt={member.name + "_icon"} />
               <div className="flex-column">
                 <div>{member.name}</div>
                 {member.isOnline ? (

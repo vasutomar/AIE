@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 function ChatTabView({ socket }) {
-  console.log('chattabview : ', socket);
   function sendMessage() {
     socket.send(document.getElementById('create-post-body').value);
   }

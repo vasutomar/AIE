@@ -5,20 +5,38 @@ import uploadADocument from "../../../assets/images/upload-a-document.png";
 
 import "./GroupCall.scss";
 import TabBracket from "./TabBracket.component";
+import { get, getAppUrl } from "../../../utils/request.util";
 
 function GroupCall({ type }) {
   const { groupId } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
   const [socket, setSocket] = useState();
+  const [groupData, setGroupData] = useState({});
 
   function establishConnection() {
     const token = localStorage.getItem("token").split(" ")[1];
     setSocket(new WebSocket(`ws://localhost:3003/${groupId}`, token));
   }
 
+  function fetchGroupData() {
+    get(
+      `${getAppUrl()}/group/${groupId}`,
+      {
+        Authorization: localStorage.getItem("token"),
+      },
+      (response) => {
+        setGroupData(response.data.data);
+        establishConnection();
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
+  }
+
   useEffect(() => {
-    establishConnection();
+    fetchGroupData();
   }, []);
 
   useEffect(() => {
@@ -45,7 +63,7 @@ function GroupCall({ type }) {
         <img src={uploadADocument} />
         <div className="font-32">Upload a document</div>
       </div>
-      <TabBracket socket={socket} type={type} />
+      <TabBracket groupData={groupData} socket={socket} type={type} />
     </div>
   );
 }
