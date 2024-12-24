@@ -3,6 +3,12 @@
   width: 100vw;
   display: flex;
 
+  .full-page {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
   .backdrop {
     -webkit-filter: blur(1px);
     -moz-filter: blur(1px);

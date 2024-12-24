@@ -145,7 +145,7 @@ function Home({ page, subPage }) {
               <img
                 alt={f.name}
                 key={f.name}
-                className={f.url === page ? "selected" : ""}
+                className={window.location.pathname.split('aie/')[1] === f.url ? "selected" : ""}
                 title={f.name}
                 src={f.logo}
                 onClick={() => handleFeatureChange(f.url)}
@@ -153,7 +153,7 @@ function Home({ page, subPage }) {
             );
           })}
         </div>
-        <div className={showCreateModal?  "backdrop" : ""}>
+        <div className={showCreateModal?  "backdrop" : "full-page"}>
           <div className="flex-column w-100-perc">
             <div className="user-panel">
               {getPageOptions().map((option) => {

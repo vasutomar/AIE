@@ -13,8 +13,13 @@ function GroupLanding({
   };
 
   function showCreateScreen(type) {
-    setGroupToCreate(type);
-    window.location.href = "create";
+    if (type === "TEXT") {
+      setGroupToCreate(type);
+      window.location.href = "create";
+    } else {
+      const str = window.location.href.replace('groups/select', `construction/${type.toLowerCase()}-group`);
+      window.location.href = str;
+    }
   }
 
   return (
