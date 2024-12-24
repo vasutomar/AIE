@@ -20,26 +20,27 @@ import Construction from "../Construction/Construction.component";
 function Home({ page, subPage }) {
   const [currentPage, setCurrentPage] = useState("Discussion zone");
   const [showCreateModal, setShowCreateModal] = useState(false);
+
   const features = [
     {
       name: "Discussion zone",
-      url: 'discussions',
+      url: "discussions",
       logo: discuss,
     },
     {
       name: "Study groups",
-      url: 'groups',
+      url: "groups",
       logo: study,
     },
     {
       name: "Practice",
       logo: test,
-      url: 'construction/practice'
+      url: "construction/practice",
     },
     {
       name: "News",
       logo: news,
-      url: 'construction/news'
+      url: "construction/news",
     },
   ];
 
@@ -48,6 +49,7 @@ function Home({ page, subPage }) {
       src: tick,
       alt: "todo",
       key: "todo",
+      link: "/aie/todo",
     },
     {
       src: face,
@@ -88,10 +90,10 @@ function Home({ page, subPage }) {
         return <Discussions />;
       }
       case "groups": {
-        return <StudyGroups pageToRender={subPage}/>;
+        return <StudyGroups pageToRender={subPage} />;
       }
       case "construction": {
-        return <Construction />
+        return <Construction />;
       }
       default: {
         return <></>;
@@ -100,13 +102,17 @@ function Home({ page, subPage }) {
   };
 
   function handleFeatureChange(featurePath) {
-    window.location.href = window.location.origin + '/aie/' + featurePath;
+    window.location.href = window.location.origin + "/aie/" + featurePath;
   }
 
   const handleOnClickPageOption = (option) => {
     switch (option) {
       case "create": {
         setShowCreateModal(true);
+        break;
+      }
+      case "todo": {
+        window.location.href = `/aie/todo`;
         break;
       }
       default:
@@ -126,7 +132,12 @@ function Home({ page, subPage }) {
 
   return (
     <>
-      {showCreateModal && <CreateModal closeModal={() => setShowCreateModal(false)} type={'post'}/>}
+      {showCreateModal && (
+        <CreateModal
+          closeModal={() => setShowCreateModal(false)}
+          type={"post"}
+        />
+      )}
       <div className={"home-layout"}>
         <div className="sidebar">
           {features.map((f) => {
@@ -142,20 +153,22 @@ function Home({ page, subPage }) {
             );
           })}
         </div>
-        <div className="flex-column w-100-perc">
-          <div className="user-panel">
-            {getPageOptions().map((option) => {
-              return (
-                <img
-                  src={option.src}
-                  key={option.key}
-                  alt={option.alt}
-                  onClick={() => handleOnClickPageOption(option.key)}
-                />
-              );
-            })}
+        <div className={showCreateModal?  "backdrop" : ""}>
+          <div className="flex-column w-100-perc">
+            <div className="user-panel">
+              {getPageOptions().map((option) => {
+                return (
+                  <img
+                    src={option.src}
+                    key={option.key}
+                    alt={option.alt}
+                    onClick={() => handleOnClickPageOption(option.key)}
+                  />
+                );
+              })}
+            </div>
+            {getComponent()}
           </div>
-          {getComponent()}
         </div>
       </div>
     </>

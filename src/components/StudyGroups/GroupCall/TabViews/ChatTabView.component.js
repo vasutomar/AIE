@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 function ChatTabView({ socket }) {
   function sendMessage() {
     socket.send(document.getElementById('create-post-body').value);
+    document.getElementById('create-post-body').value = '';
   }
 
   function updateChats(msg) {
