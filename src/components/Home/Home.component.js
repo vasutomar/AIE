@@ -16,6 +16,7 @@ import "./Home.scss";
 import StudyGroups from "../StudyGroups/StudyGroups.component";
 import CreateModal from "../../molecules/CreateModal/CreateModal";
 import Construction from "../Construction/Construction.component";
+import Todo from "../Todo/Todo.component";
 
 function Home({ page, subPage }) {
   const [currentPage, setCurrentPage] = useState("Discussion zone");
@@ -95,6 +96,9 @@ function Home({ page, subPage }) {
       case "construction": {
         return <Construction />;
       }
+      case "todo": {
+        return <Todo />;
+      }
       default: {
         return <></>;
       }
@@ -135,7 +139,7 @@ function Home({ page, subPage }) {
       {showCreateModal && (
         <CreateModal
           closeModal={() => setShowCreateModal(false)}
-          type={"post"}
+          type={page === "todo" ? "todo" : "post"}
         />
       )}
       <div className={"home-layout"}>

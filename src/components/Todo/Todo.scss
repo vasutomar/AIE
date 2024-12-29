@@ -1,3 +1,44 @@
 .todo-layout {
-    background-color: pink;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 100%;
+
+  .todo-group {
+    background-color: #f1e4e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+
+    label {
+      font-size: 36px;
+    }
+
+    .item-holder {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 95%;
+      margin-left: 1rem;
+      align-items: center;
+
+      .todo-item {
+        width: 100%;
+        margin: 1rem;
+        cursor: pointer;
+
+        .deadline {
+          color: gray;
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+  :first-child {
+    margin: 1rem 0rem 1rem 1rem;
+  }
+  :last-child {
+    margin: 1rem 1rem 1rem 0rem;
+  }
 }

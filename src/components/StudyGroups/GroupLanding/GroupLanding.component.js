@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import "./GroupLanding.scss";
 import Card from "../../../atoms/Card/Card";
 import VerticalLine from "../../../atoms/VerticalLine/VerticalLine";
@@ -43,7 +43,7 @@ function GroupLanding({
                   hideButtons
                   extraClasses={extraClasses}
                 />
-                <img src={card_data.image} />
+                <img src={card_data.image} alt={'group-card-img'}/>
               </div>
               {index < 3 && <VerticalLine height={300} />}
             </>

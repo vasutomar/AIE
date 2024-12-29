@@ -4,8 +4,6 @@ import Landing from './components/Landing/Landing.component';
 import Authentication from './components/Authentication/Authentication.component';
 import Questions from './components/Questions/Questions.component';
 import Home from './components/Home/Home.component';
-import Construction from './components/Construction/Construction.component';
-import Todo from './molecules/CreateModal/Todo';
 
 function App() {
   return (
@@ -20,7 +18,7 @@ function App() {
         <Route path="/groups/create" element={<Home page={'groups'} subPage={'create-group'}/>}/>
         <Route path="/groups/session/:groupId" element={<Home page={'groups'} subPage={'group-call'}/>}/>
         <Route path="/construction/:feature" element={<Home page={'construction'}/>}/>
-        <Route path="/todo" element={<Todo/>}/>
+        <Route path="/todo" element={<Home page={'todo'}/>}/>
       </Routes>
     </BrowserRouter>
   );
