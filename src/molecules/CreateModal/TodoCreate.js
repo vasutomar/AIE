@@ -4,16 +4,12 @@ import { post, getAppUrl } from "../../utils/request.util";
 
 function TodoCreate({ closeModal }) {
   const createTodo = () => {
-    const exam = localStorage.getItem("exam");
-    const username = localStorage.getItem("username");
     const deadline = document.getElementById("deadline").value;
     const title = document.getElementById("create-todo-title").value;
 
     const payload = {
-      exam,
       title,
       deadline,
-      username,
     };
     post(
       `${getAppUrl()}/todo/`,

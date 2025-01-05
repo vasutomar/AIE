@@ -34,9 +34,9 @@ function Home({ page, subPage }) {
       logo: study,
     },
     {
-      name: "Practice",
+      name: "Todo",
       logo: test,
-      url: "construction/practice",
+      url: "todo",
     },
     {
       name: "News",
@@ -46,12 +46,6 @@ function Home({ page, subPage }) {
   ];
 
   const pageOptions = [
-    {
-      src: tick,
-      alt: "todo",
-      key: "todo",
-      link: "/aie/todo",
-    },
     {
       src: face,
       alt: "profile",

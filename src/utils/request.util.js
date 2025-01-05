@@ -6,8 +6,11 @@ export function getAppUrl() {
 } 
 
 export function post(url, data, headers, onComplete, onFailure) {
+  const token = localStorage.getItem("token");
   const options = {};
+  !headers && (headers = {});
   headers && (options["headers"] = headers);
+  options["headers"].Authorization = token;
   axios
     .post(url, data, options)
     .then(function (response) {
@@ -19,8 +22,11 @@ export function post(url, data, headers, onComplete, onFailure) {
 }
 
 export function get(url, headers, onComplete, onFailure) {
+  const token = localStorage.getItem("token");
   const options = {};
+  !headers && (headers = {});
   headers && (options["headers"] = headers);
+  options["headers"].Authorization = token;
   axios
     .get(url, options)
     .then(function (response) {
@@ -32,8 +38,11 @@ export function get(url, headers, onComplete, onFailure) {
 }
 
 export function patch(url, data, headers, onComplete, onFailure) {
+  const token = localStorage.getItem("token");
   const options = {};
+  !headers && (headers = {});
   headers && (options["headers"] = headers);
+  options["headers"].Authorization = token;
   axios
     .patch(url, data, options)
     .then(function (response) {
