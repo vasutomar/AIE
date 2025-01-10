@@ -6,10 +6,11 @@ import { get, post, getAppUrl } from "../../utils/request.util";
 
 function Landing() {
   useEffect(() => {
+    const token = localStorage.getItem("token") || "";
     post(
       `${getAppUrl()}/authentication/verify`,
       {
-        token: localStorage.getItem("token").split(" ")[1]
+        token: token && token.split(" ")[1]
       },
       null,
       (response) => {
